@@ -1,4 +1,4 @@
-MANAGE := poetry run python task_manager/manage.py
+MANAGE := poetry run python manage.py
 
 install:
 	@poetry install
