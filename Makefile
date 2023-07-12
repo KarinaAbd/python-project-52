@@ -1,13 +1,13 @@
 MANAGE := poetry run python task_manager/manage.py
 
-install: .env
-	poetry install
+install: task_manager/task_manager/.env
+	@poetry install
 
 make-migration:
-	$(MANAGE) makemigrations
+	@$(MANAGE) makemigrations
 
 migrate: make-migration
-	$(MANAGE) migrate
+	@$(MANAGE) migrate
 
 build: install migrate
 
