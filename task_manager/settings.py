@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
     'https://task-manager-by-karina.onrender.com/'
 ]
 
+CSRF_TRUSTED_ORIGINS = ['https://task-manager-by-karina.onrender.com/']
 
 # Application definition
 
