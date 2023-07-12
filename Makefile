@@ -18,7 +18,7 @@ check:
 	poetry check
 
 lint:
-	poetry run flake8 ./task_manager/task_manager
+	poetry run flake8 ./task_manager/
 
 deploy:
-	poetry run gunicorn -w 5 task_manager.task_manager.wsgi
+	poetry run gunicorn -w 5 task_manager.wsgi
