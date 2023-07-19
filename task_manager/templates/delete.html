@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru-ru">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Менеджер задач Hexlet</title>
+        {% load i18n %}
+        {% load django_bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+    </head>
+
+    <body class="d-flex flex-column min-vh-100">
+        <header>
+        <nav class="navbar navbar-light px-4 d-flex bd-highlight bg-warning text-dark">
+            <div class="p-2 flex-grow-1">
+            <a class="navbar-brand" href="{% url 'index' %}">{% trans "Task manager" %}</a>
+            </div>  
+            <div class="p-2">
+            <a class="nav-link" href="{% url 'user_list' %}">{% trans "Users" %}</a>
+            </div>
+            <div class="p-2">
+            <a class="nav-link" href="#">{% trans "Log In" %}</a>
+            </div>
+            <div class="p-2">
+            <a class="nav-link" href="{% url 'user_create' %}">{% trans "Sign Up" %}</a>
+            </div>
+        </nav>
+        </header>
+
+        {% bootstrap_messages %}
+
+        <div class="container wrapper flex-grow-1 my-4">
+            <h1 class="my-4">{% trans 'Delete user' %}</h1>
+            <form method="post">
+                {% csrf_token %}
+                <p>{% trans 'Are you sure you want to delete' %} {{ user.first_name }} {{ user.last_name }}?</p>
+                {% bootstrap_button button_text button_type="submit" button_class="btn btn-danger" %}
+            </form>
+        </div>
+
+        <footer>
+        <div class="container my-5 pt-4 border-top d-flex justify-content-center">
+            <a class="text-dark" target="_blank" href="https://github.com/KarinaAbd/python-project-52">{% trans "source code" %}</a>
+        </div>
+        </footer>
+    </body>
+</html>
