@@ -14,16 +14,31 @@
       <nav class="navbar navbar-light px-4 d-flex bd-highlight bg-warning text-dark">
         <div class="p-2 flex-grow-1">
           <a class="navbar-brand" href="{% url 'index' %}">{% trans "Task manager" %}</a>
-        </div>  
+        </div>
         <div class="p-2">
           <a class="nav-link" href="{% url 'user_list' %}">{% trans "Users" %}</a>
         </div>
+        {% if user.is_authenticated %}
         <div class="p-2">
-          <a class="nav-link" href="#">{% trans "Log In" %}</a>
+          <a class="nav-link" href="#">{% trans "Statuses" %}</a>
+        </div>
+        <div class="p-2">
+          <a class="nav-link" href="#">{% trans "Labels" %}</a>
+        </div>
+        <div class="p-2">
+          <a class="nav-link" href="#">{% trans "Tasks" %}</a>
+        </div>
+        <div class="p-2">
+          <a class="nav-link" href="{% url 'logout' %}">{% trans "Log Out" %}</a>
+        </div>
+        {% else %}
+        <div class="p-2">
+          <a class="nav-link" href="{% url 'login' %}">{% trans "Log In" %}</a>
         </div>
         <div class="p-2">
           <a class="nav-link" href="{% url 'user_create' %}">{% trans "Sign Up" %}</a>
         </div>
+        {% endif %}
       </nav>
     </header>
 

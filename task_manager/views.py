@@ -1,14 +1,25 @@
-from django.shortcuts import render
-from django.core.management.utils import get_random_secret_key
-from django.http import HttpResponse
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.views.generic.base import TemplateView
 
 
-print(get_random_secret_key())
+class IndexView(TemplateView):
+    template_name = 'index.html'
 
 
-def index(request):
-    return render(request, 'index.html')
+class UserLogInView(LoginView, SuccessMessageMixin):
+    template_name = 'login.html'
+    authentication_form = AuthenticationForm
+    # form_class = AuthenticationForm
+    next_page = reverse_lazy('index')
+    success_message = _('You are logged in')
+    extra_context = {
+        'button_text': _('Enter')
+    }
 
 
-def about(request):
-    return HttpResponse('Hello, World!')
+class UserLogOutView(LogoutView):
+    pass
