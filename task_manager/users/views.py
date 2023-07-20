@@ -32,6 +32,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('login')
     success_message = _('User is successfully registered')
     extra_context = {
+        'title': _('Create user'),
         'button_text': _('Create'),
     }
 
@@ -43,14 +44,14 @@ class UserUpdateView(UpdateView, SuccessMessageMixin, UserPassesTestMixin):
     form_class = UserForm
     template_name = 'signup.html'
     extra_context = {
-            'button_text': _('Update'),
-        }
+        'title': _('Update user'),
+        'button_text': _('Update'),
+    }
     success_url = reverse_lazy('user_list')
     success_message = _('User is successfully updated')
     denied_url = reverse_lazy('login')
     denied_message = _('You are not logged in! Please log in.')
-    permission_denied_message = 'У вас нет прав для изменения \
-        другого пользователя.'
+    permission_denied_message = _('You have no rights to change another user.')
 
     def dispatch(self, request, *args, **kwargs):
         user_test_result = self.get_test_func()()
@@ -72,14 +73,13 @@ class UserDeleteView(SuccessMessageMixin, DeleteView, UserPassesTestMixin):
     model = User
     template_name = 'delete.html'
     extra_context = {
-        'button_text': _('Delete'),
+        'button_text': _('Yes, delete'),
     }
     success_url = reverse_lazy('user_list')
     success_message = _('User is successfully deleted')
     denied_url = reverse_lazy('login')
     denied_message = _('You are not logged in! Please log in.')
-    permission_denied_message = 'У вас нет прав для удаления \
-        другого пользователя.'
+    permission_denied_message = _('You have no rights to change another user.')
 
     def dispatch(self, request, *args, **kwargs):
         user_test_result = self.get_test_func()()

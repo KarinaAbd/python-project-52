@@ -1,13 +1,15 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
 <!DOCTYPE html>
-<html lang="ru-ru">
+<html lang="{{ LANGUAGE_CODE }}">
 
 <head>
-  {% load i18n %}
   {% load django_bootstrap5 %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>{% trans "Hexlet Task Manager" %}</title>
+  <title>Hexlet Task Manager</title>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -51,8 +53,7 @@
 
   <footer>
     <div class="container my-5 pt-4 border-top d-flex justify-content-center">
-      <a class="text-dark" target="_blank" href="https://github.com/KarinaAbd/python-project-52">{% trans "source code"
-        %}</a>
+      <a class="text-dark" target="_blank" href="https://github.com/KarinaAbd/python-project-52">{% trans "source code" %}</a>
     </div>
   </footer>
 </body>
