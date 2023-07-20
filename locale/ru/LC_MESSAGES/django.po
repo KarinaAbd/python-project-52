@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-21 00:09+0300\n"
+"POT-Creation-Date: 2023-07-21 00:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,47 +20,39 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: task_manager/templates/base.html:10
-#, fuzzy
-#| msgid "Task Manager"
-msgid "Hexlet Task Manager"
-msgstr "Менеджер задач Hexlet"
-
-#: task_manager/templates/base.html:17
+#: task_manager/templates/base.html:19
 msgid "Task manager"
 msgstr "Менеджер задач"
 
-#: task_manager/templates/base.html:20 task_manager/templates/users.html:5
+#: task_manager/templates/base.html:22 task_manager/templates/users.html:5
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/templates/base.html:24
+#: task_manager/templates/base.html:26
 msgid "Statuses"
 msgstr "Статусы"
 
-#: task_manager/templates/base.html:27
+#: task_manager/templates/base.html:29
 msgid "Labels"
 msgstr "Метки"
 
-#: task_manager/templates/base.html:30
+#: task_manager/templates/base.html:32
 msgid "Tasks"
 msgstr "Задачи"
 
-#: task_manager/templates/base.html:33
-#, fuzzy
-#| msgid "Log In"
+#: task_manager/templates/base.html:35
 msgid "Log Out"
 msgstr "Выход"
 
-#: task_manager/templates/base.html:37 task_manager/templates/login.html:6
+#: task_manager/templates/base.html:39 task_manager/templates/login.html:6
 msgid "Log In"
 msgstr "Вход"
 
-#: task_manager/templates/base.html:40
+#: task_manager/templates/base.html:42
 msgid "Sign Up"
 msgstr "Регистрация"
 
-#: task_manager/templates/base.html:54
+#: task_manager/templates/base.html:56
 msgid "source code"
 msgstr "исходный код"
 
@@ -85,8 +77,6 @@ msgid "Get started"
 msgstr "Начать"
 
 #: task_manager/templates/users.html:10
-#, fuzzy
-#| msgid "Users"
 msgid "Username"
 msgstr "Имя пользователя"
 
@@ -111,8 +101,6 @@ msgid "User is successfully registered"
 msgstr "Пользователь успешно зарегистрирован"
 
 #: task_manager/users/views.py:35
-#, fuzzy
-#| msgid "Delete user"
 msgid "Create user"
 msgstr "Регистрация"
 
@@ -121,8 +109,6 @@ msgid "Create"
 msgstr "Зарегестрировать"
 
 #: task_manager/users/views.py:47
-#, fuzzy
-#| msgid "Update"
 msgid "Update user"
 msgstr "Изменение пользователя"
 
@@ -157,6 +143,3 @@ msgstr "Войти"
 #: task_manager/views.py:26
 msgid "You are logged out"
 msgstr "Вы разлогинены"
-
-#~ msgid "You have no rights to delete another user."
-#~ msgstr "У вас нет прав для изменения другого пользователя."
