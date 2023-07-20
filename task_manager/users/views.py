@@ -1,9 +1,14 @@
 from typing import Any
-from django.db.models.query import QuerySet
-from django.utils.translation import gettext_lazy as _
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+
+from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models.query import QuerySet
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
 from .forms import UserForm
 from .models import User
 
@@ -31,24 +36,60 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     }
 
 
-class UserUpdateView(SuccessMessageMixin, UpdateView):
-    """Update the user."""
+class UserUpdateView(UpdateView, SuccessMessageMixin, UserPassesTestMixin):
+    """Update existing and logged in user.
+    The user can only edit himself."""
     model = User
     form_class = UserForm
     template_name = 'signup.html'
+    extra_context = {
+            'button_text': _('Update'),
+        }
     success_url = reverse_lazy('user_list')
     success_message = _('User is successfully updated')
-    extra_context = {
-        'button_text': _('Update'),
-    }
+    denied_url = reverse_lazy('login')
+    denied_message = _('You are not logged in! Please log in.')
+    permission_denied_message = 'У вас нет прав для изменения \
+        другого пользователя.'
+
+    def dispatch(self, request, *args, **kwargs):
+        user_test_result = self.get_test_func()()
+        if not request.user.is_authenticated:
+            messages.error(self.request, self.denied_message)
+            return redirect(self.denied_url)
+        elif not user_test_result:
+            messages.error(self.request, self.permission_denied_message)
+            return redirect(self.success_url)
+        return super().dispatch(request, *args, **kwargs)
+
+    def test_func(self):
+        return self.get_object() == self.request.user
 
 
-class UserDeleteView(SuccessMessageMixin, DeleteView):
-    """Delete the user."""
+class UserDeleteView(SuccessMessageMixin, DeleteView, UserPassesTestMixin):
+    """Delete existing and logged in user.
+    The user can only edit himself."""
     model = User
     template_name = 'delete.html'
-    success_url = reverse_lazy('user_list')
-    success_message = _('User is successfully deleted')
     extra_context = {
         'button_text': _('Delete'),
     }
+    success_url = reverse_lazy('user_list')
+    success_message = _('User is successfully deleted')
+    denied_url = reverse_lazy('login')
+    denied_message = _('You are not logged in! Please log in.')
+    permission_denied_message = 'У вас нет прав для удаления \
+        другого пользователя.'
+
+    def dispatch(self, request, *args, **kwargs):
+        user_test_result = self.get_test_func()()
+        if not request.user.is_authenticated:
+            messages.error(self.request, self.denied_message)
+            return redirect(self.denied_url)
+        elif not user_test_result:
+            messages.error(self.request, self.permission_denied_message)
+            return redirect(self.success_url)
+        return super().dispatch(request, *args, **kwargs)
+
+    def test_func(self):
+        return self.get_object() == self.request.user

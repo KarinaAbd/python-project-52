@@ -21,5 +21,6 @@ class UserLogInView(LoginView, SuccessMessageMixin):
     }
 
 
-class UserLogOutView(LogoutView):
-    pass
+class UserLogOutView(LogoutView, SuccessMessageMixin):
+    next_page = reverse_lazy('index')
+    success_message = _('You are logged out')
