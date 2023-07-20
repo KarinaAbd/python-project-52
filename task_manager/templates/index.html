@@ -1,64 +1,14 @@
-<!DOCTYPE html>
-<html lang="ru-ru">
-  <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Менеджер задач Hexlet</title>
-      {% load i18n %}
-      {% load django_bootstrap5 %}
-      {% bootstrap_css %}
-      {% bootstrap_javascript %}
-  </head>
+{% extends 'base.html' %}
+{% load i18n %}
 
-  <body class="d-flex flex-column min-vh-100">
-    <header>
-      <nav class="navbar navbar-light px-4 d-flex bd-highlight bg-warning text-dark">
-        <div class="p-2 flex-grow-1">
-          <a class="navbar-brand" href="{% url 'index' %}">{% trans "Task manager" %}</a>
-        </div>
-        <div class="p-2">
-          <a class="nav-link" href="{% url 'user_list' %}">{% trans "Users" %}</a>
-        </div>
-        {% if user.is_authenticated %}
-        <div class="p-2">
-          <a class="nav-link" href="#">{% trans "Statuses" %}</a>
-        </div>
-        <div class="p-2">
-          <a class="nav-link" href="#">{% trans "Labels" %}</a>
-        </div>
-        <div class="p-2">
-          <a class="nav-link" href="#">{% trans "Tasks" %}</a>
-        </div>
-        <div class="p-2">
-          <a class="nav-link" href="{% url 'logout' %}">{% trans "Log Out" %}</a>
-        </div>
-        {% else %}
-        <div class="p-2">
-          <a class="nav-link" href="{% url 'login' %}">{% trans "Log In" %}</a>
-        </div>
-        <div class="p-2">
-          <a class="nav-link" href="{% url 'user_create' %}">{% trans "Sign Up" %}</a>
-        </div>
-        {% endif %}
-      </nav>
-    </header>
-
-    {% bootstrap_messages %}
-
-    <div class="container wrapper flex-grow-1 my-4">
-      <div class="card">
-        <div class="card-body p-5 bg-light">
-          <div class="display-4 my-3">{% trans "Task Manager" %}</div>
-          <p class="lead">{% trans "There is only one way to eat an elephant: a bite at a time" %}</p>
-          <hr>
-          <a class="btn btn-primary btn-lg bg-warning text-dark border-0" href="https://ru.hexlet.io">{% trans "Get started" %}</a>
-        </div>
-      </div>
-    </div>
-
-    <footer>
-      <div class="container my-5 pt-4 border-top d-flex justify-content-center">
-        <a class="text-dark" target="_blank" href="https://github.com/KarinaAbd/python-project-52">{% trans "source code" %}</a>
-      </div>
-    </footer>
-  </body>
-</html>
+{% block content %}
+<div class="card">
+  <div class="card-body p-5 bg-light">
+    <div class="display-4 my-3">{% trans "Task Manager" %}</div>
+    <p class="lead">{% trans "There is only one way to eat an elephant: a bite at a time" %}</p>
+    <hr>
+    <a class="btn btn-primary btn-lg bg-warning text-dark border-0" href="https://ru.hexlet.io">{% trans "Get started"
+      %}</a>
+  </div>
+</div>
+{% endblock %}

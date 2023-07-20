@@ -1,54 +1,13 @@
-<!DOCTYPE html>
-<html lang="ru-ru">
-  <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Менеджер задач Hexlet</title>
-      {% load i18n %}
-      {% load django_bootstrap5 %}
-      {% bootstrap_css %}
-      {% bootstrap_javascript %}
-  </head>
+{% extends 'base.html' %}
+{% load i18n %}
+{% load django_bootstrap5 %}
 
-  <body class="d-flex flex-column min-vh-100">
-    <header>
-      <nav class="navbar navbar-light px-4 d-flex bd-highlight bg-warning text-dark">
-        <div class="p-2 flex-grow-1">
-          <a class="navbar-brand" href="{% url 'index' %}">{% trans "Task manager" %}</a>
-        </div>  
-        <div class="p-2">
-          <a class="nav-link" href="#">{% trans "Users" %}</a>
-        </div>
-        <div class="p-2">
-          <a class="nav-link" href="#">{% trans "Log In" %}</a>
-        </div>
-        <div class="p-2">
-          <a class="nav-link" href="#">{% trans "Sign Up" %}</a>
-        </div>
-      </nav>
-    </header>
+{% block content %}
+<h1>{% trans "Sign Up" %}</h1>
 
-    {% bootstrap_messages %}
-
-    <div class="container wrapper flex-grow-1 my-4">
-        <h1>{% trans "Sign Up" %}</h1>
-            
-        <form method="post">
-          {% csrf_token %}
-          {% bootstrap_form form %}
-          {% bootstrap_button button_text button_type="submit" button_class="btn btn-primary" %}
-            <!-- <input type="hidden" name="csrfmiddlewaretoken" value="ApLp9w5cft4RuAur2gMRrxAYm1TjOxnqYE7V6m8mEd8c9MIvDrddzAmSTyOt0hRd">
-            <div class="mb-3"><label class="form-label" for="id_first_name">Имя</label><input type="text" name="first_name" maxlength="150" class="form-control" placeholder="Имя" required="" id="id_first_name"></div><div class="mb-3"><label class="form-label" for="id_last_name">Фамилия</label><input type="text" name="last_name" maxlength="150" class="form-control" placeholder="Фамилия" required="" id="id_last_name"></div><div class="mb-3"><label class="form-label" for="id_username">Имя пользователя</label><input type="text" name="username" maxlength="150" autofocus="" class="form-control" placeholder="Имя пользователя" required="" id="id_username"><div class="form-text">Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.</div>
-        </div><div class="mb-3"><label class="form-label" for="id_password1">Пароль</label><input type="password" name="password1" autocomplete="new-password" class="form-control" placeholder="Пароль" required="" id="id_password1"><div class="form-text"><ul><li>Ваш пароль должен содержать как минимум 3 символа.</li></ul></div>
-        </div><div class="mb-3"><label class="form-label" for="id_password2">Подтверждение пароля</label><input type="password" name="password2" autocomplete="new-password" class="form-control" placeholder="Подтверждение пароля" required="" id="id_password2"><div class="form-text">Для подтверждения введите, пожалуйста, пароль ещё раз.</div>
-        </div>
-            <input class="btn btn-primary" type="submit" value="Зарегистрировать"> -->
-        </form>
-    </div>
-
-    <footer>
-      <div class="container my-5 pt-4 border-top d-flex justify-content-center">
-        <a class="text-dark" target="_blank" href="https://github.com/KarinaAbd/python-project-52">{% trans "source code" %}</a>
-      </div>
-    </footer>
-  </body>
-</html>
+<form method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% bootstrap_button button_text button_type="submit" button_class="btn-warning" %}
+</form>
+{% endblock %}
