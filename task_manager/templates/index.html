@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load django_bootstrap5 %}
 
 {% block content %}
 <div class="card">
@@ -7,8 +8,7 @@
     <div class="display-4 my-3">{% trans "Task Manager" %}</div>
     <p class="lead">{% trans "There is only one way to eat an elephant: a bite at a time" %}</p>
     <hr>
-    <a class="btn btn-primary btn-lg bg-warning text-dark border-0" href="https://ru.hexlet.io">{% trans "Get started"
-      %}</a>
+    <a class="btn btn-warning btn-lg text-dark" href="{% url 'login' %}">{% trans "Get started" %}</a>
   </div>
 </div>
 {% endblock %}
