@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from task_manager.mixins import ProjectLoginRequiredMixin
+from task_manager.mixins import ProjectDeletionMixin, ProjectLoginRequiredMixin
 from task_manager.statuses.forms import StatusForm
 from task_manager.statuses.models import Status
 
@@ -55,11 +55,13 @@ class StatusUpdateView(ProjectLoginRequiredMixin,
 
 
 class StatusDeleteView(ProjectLoginRequiredMixin,
+                       ProjectDeletionMixin,
                        SuccessMessageMixin,
                        DeleteView):
     """
     Delete existing status.
     Authorization required.
+    The status can be deleted only if it isn't being used.
     """
     model = Status
     template_name = 'delete.html'
@@ -70,3 +72,4 @@ class StatusDeleteView(ProjectLoginRequiredMixin,
         'name': str(model.name),
         'button_text': _('Yes, delete'),
     }
+    protected_message = _('Unable to delete a status because it is being used')
