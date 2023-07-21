@@ -1,21 +1,30 @@
-from django.views.generic import ListView, CreateView
-from .forms import StatusForm
-from .models import Status
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
+from task_manager.mixins import ProjectLoginRequiredMixin
+from task_manager.statuses.forms import StatusForm
+from task_manager.statuses.models import Status
 
 
-class StatusListView(ListView):
-    """List of all statuses.
-    Authorization required."""
+class StatusListView(ProjectLoginRequiredMixin, ListView):
+    """
+    List of all statuses.
+    Authorization required.
+    """
     model = Status
     template_name = 'statuses.html'
     context_object_name = 'statuses'
 
 
-class StatusCreateView(CreateView):
-    """Create new status.
-    Authorization required."""
+class StatusCreateView(ProjectLoginRequiredMixin,
+                       SuccessMessageMixin,
+                       CreateView):
+    """
+    Create new status.
+    Authorization required.
+    """
     model = Status
     form_class = StatusForm
     template_name = 'form.html'
@@ -24,4 +33,40 @@ class StatusCreateView(CreateView):
     extra_context = {
         'title': _('Create status'),
         'button_text': _('Create'),
+    }
+
+
+class StatusUpdateView(ProjectLoginRequiredMixin,
+                       SuccessMessageMixin,
+                       UpdateView):
+    """
+    Update existing status.
+    Authorization required.
+    """
+    model = Status
+    form_class = StatusForm
+    template_name = 'form.html'
+    success_url = reverse_lazy('status_list')
+    success_message = _('Status is successfully updated')
+    extra_context = {
+        'title': _('Update status'),
+        'button_text': _('Update'),
+    }
+
+
+class StatusDeleteView(ProjectLoginRequiredMixin,
+                       SuccessMessageMixin,
+                       DeleteView):
+    """
+    Delete existing status.
+    Authorization required.
+    """
+    model = Status
+    template_name = 'delete.html'
+    success_url = reverse_lazy('status_list')
+    success_message = _('Status is successfully deleted')
+    extra_context = {
+        'title': _('Delete status'),
+        'name': str(model.name),
+        'button_text': _('Yes, delete'),
     }

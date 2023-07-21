@@ -3,10 +3,10 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-<h1 class="my-4">{% trans 'Delete user' %}</h1>
+<h1 class="my-4">{{ title }}</h1>
 <form method="post">
     {% csrf_token %}
-    <p>{% trans 'Are you sure you want to delete' %} {{ user.first_name }} {{ user.last_name }}?</p>
+    <p>{% trans 'Are you sure you want to delete' %} {{ name }}?</p>
     {% bootstrap_button button_text button_type="submit" button_class="btn btn-danger" %}
 </form>
 {% endblock %}
