@@ -79,6 +79,7 @@ class TaskDeleteView(ProjectLoginRequiredMixin,
     }
     success_url = reverse_lazy('task_list')
     success_message = _('Task is successfully deleted')
+    denied_url = reverse_lazy('task_list')
     permission_denied_message = _('The task can be deleted only by its author')
 
 

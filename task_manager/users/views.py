@@ -54,6 +54,7 @@ class UserUpdateView(ProjectLoginRequiredMixin,
     }
     success_url = reverse_lazy('user_list')
     success_message = _('User is successfully updated')
+    denied_url = reverse_lazy('user_list')
     permission_denied_message = _('You have no rights to change another user.')
 
 
@@ -76,5 +77,6 @@ class UserDeleteView(ProjectLoginRequiredMixin,
     }
     success_url = reverse_lazy('user_list')
     success_message = _('User is successfully deleted')
+    denied_url = reverse_lazy('user_list')
     permission_denied_message = _('You have no rights to change another user.')
     protected_message = _('Unable to delete a user because he is being used')
