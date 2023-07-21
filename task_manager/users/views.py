@@ -40,8 +40,10 @@ class UserUpdateView(ProjectLoginRequiredMixin,
                      ProjectUserPassesTestMixin,
                      SuccessMessageMixin,
                      UpdateView):
-    """Update existing and logged in user.
-    The user can only edit himself."""
+    """
+    Update existing and logged in user.
+    The user can only edit himself.
+    """
     model = User
     form_class = UserForm
     template_name = 'form.html'
@@ -57,8 +59,10 @@ class UserDeleteView(ProjectLoginRequiredMixin,
                      ProjectUserPassesTestMixin,
                      SuccessMessageMixin,
                      DeleteView):
-    """Delete existing and logged in user.
-    The user can only edit himself."""
+    """
+    Delete existing and logged in user.
+    The user can only edit himself.
+    """
     model = User
     template_name = 'delete.html'
     extra_context = {
