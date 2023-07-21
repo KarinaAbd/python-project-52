@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1 class="my-4">{% trans 'Task view' %}</h1>
+<div class="card">
+    <h2 class="card-header bg-warning" style="--bs-bg-opacity: .5;">{{ task.name }}</h2>
+    <div class="card-body">
+        <p>{{ task.description }}</p>
+        <hr>
+        <table class="table my-4">
+            <tr>
+                <td>{% trans 'Author' %}</td>
+                <td>{{ task.author }}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Performer' %}</td>
+                <td>{{ task.performer }}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Status' %}</td>
+                <td>{{ task.status }}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Creation date' %}</td>
+                <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Labels' %}</td>
+                <td>{{ task.name }}</td>
+            </tr>
+        </table>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a class="btn btn-warning btn-lg text-dark" href="{% url 'task_update' task.id %}">{% trans 'Update' %}</a>
+            <a class="btn btn-warning btn-lg text-dark" href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

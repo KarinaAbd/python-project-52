@@ -19,7 +19,7 @@ class Task(models.Model):
     status = models.ForeignKey(
         Status,
         on_delete=models.PROTECT,
-        verbose_name=_('Status')
+        verbose_name=_('Status'),
     )
     author = models.ForeignKey(
         User,
