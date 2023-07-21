@@ -24,11 +24,11 @@ class UserListView(ListView):
         return users
 
 
-class UserCreateView(SuccessMessageMixin, CreateView):
+class UserCreateView(CreateView, SuccessMessageMixin):
     """Create new user."""
     model = User
     form_class = UserForm
-    template_name = 'signup.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('login')
     success_message = _('User is successfully registered')
     extra_context = {
@@ -42,7 +42,7 @@ class UserUpdateView(UpdateView, SuccessMessageMixin, UserPassesTestMixin):
     The user can only edit himself."""
     model = User
     form_class = UserForm
-    template_name = 'signup.html'
+    template_name = 'form.html'
     extra_context = {
         'title': _('Update user'),
         'button_text': _('Update'),

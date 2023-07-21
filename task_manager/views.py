@@ -11,8 +11,9 @@ class IndexView(TemplateView):
 
 
 class UserLogInView(LoginView):
-    template_name = 'login.html'
+    template_name = 'form.html'
     extra_context = {
+        'title': _('Log In'),
         'button_text': _('Enter')
     }
     next_page = reverse_lazy('index')
