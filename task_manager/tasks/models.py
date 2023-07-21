@@ -24,12 +24,14 @@ class Task(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
-        verbose_name=_('Author')
+        verbose_name=_('Author'),
+        related_name='author',
     )
     performer = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
-        verbose_name=_('Performer')
+        verbose_name=_('Performer'),
+        related_name='performer',
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
