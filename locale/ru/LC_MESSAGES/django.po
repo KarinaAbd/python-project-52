@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-21 15:56+0300\n"
+"POT-Creation-Date: 2023-07-21 21:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgstr "Статус успешно создан"
 msgid "Create status"
 msgstr "Создание статуса"
 
-#: task_manager/statuses/views.py:35 task_manager/users/views.py:35
+#: task_manager/statuses/views.py:35
 msgid "Create"
 msgstr "Создать"
 
@@ -158,6 +158,10 @@ msgstr "Пользователь успешно зарегистрирован"
 #: task_manager/users/views.py:34
 msgid "Create user"
 msgstr "Регистрация"
+
+#: task_manager/users/views.py:35
+msgid "Register"
+msgstr "Зарегестрировать"
 
 #: task_manager/users/views.py:51
 msgid "Update user"

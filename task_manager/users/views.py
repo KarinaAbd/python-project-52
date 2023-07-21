@@ -32,7 +32,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     success_message = _('User is successfully registered')
     extra_context = {
         'title': _('Create user'),
-        'button_text': _('Create'),
+        'button_text': _('Register'),
     }
 
 
