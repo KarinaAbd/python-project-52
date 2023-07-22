@@ -72,5 +72,5 @@ class StatusDeleteView(ProjectLoginRequiredMixin,
     }
     success_url = reverse_lazy('status_list')
     success_message = _('Status is successfully deleted')
-    denied_url = reverse_lazy('user_list')
+    denied_url = reverse_lazy('status_list')
     protected_message = _('Unable to delete a status because it is being used')
