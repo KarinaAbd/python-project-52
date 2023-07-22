@@ -14,8 +14,8 @@
                 <td>{{ task.author }}</td>
             </tr>
             <tr>
-                <td>{% trans 'Performer' %}</td>
-                <td>{{ task.performer }}</td>
+                <td>{% trans 'Executor' %}</td>
+                <td>{{ task.executor }}</td>
             </tr>
             <tr>
                 <td>{% trans 'Status' %}</td>
@@ -27,7 +27,13 @@
             </tr>
             <tr>
                 <td>{% trans 'Labels' %}</td>
-                <td>{{ task.label }}</td>
+                <td>
+                    <ul>
+                        {% for label in task.labels.all %}
+                            <li>{{  label.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
             </tr>
         </table>
         <div class="btn-group" role="group" aria-label="Basic example">

@@ -12,7 +12,7 @@
             <th>{% trans 'Name' %}</th>
             <th>{% trans 'Status' %}</th>
             <th>{% trans 'Author' %}</th>
-            <th>{% trans 'Performer' %}</th>
+            <th>{% trans 'Executor' %}</th>
             <th>{% trans 'Creation date' %}</th>
             <th></th>
         </tr>
@@ -26,7 +26,7 @@
             <td><a href="{% url 'task_page' task.id %}">{{ task.name }}</a> </td>
             <td>{{ task.status }}</td>
             <td>{{ task.author }}</td>
-            <td>{{ task.performer }}</td>
+            <td>{{ task.executor }}</td>
             <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
             <td>
                 <a href="{% url 'task_update' task.id %}">{% trans 'Update' %}</a>
