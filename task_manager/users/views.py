@@ -70,9 +70,12 @@ class UserDeleteView(ProjectLoginRequiredMixin,
     """
     model = User
     template_name = 'delete.html'
+    # context_object_name = 'user'
+    # user = User.objects.get(id=kwargs['pk'])
+
     extra_context = {
         'title': _('Delete user'),
-        # 'name': ,
+        # 'name': user.first_name + user.last_name,
         'button_text': _('Yes, delete'),
     }
     success_url = reverse_lazy('user_list')
@@ -80,3 +83,9 @@ class UserDeleteView(ProjectLoginRequiredMixin,
     denied_url = reverse_lazy('user_list')
     permission_denied_message = _('You have no rights to change another user.')
     protected_message = _('Unable to delete a user because he is being used')
+
+    def get_context_data(self, **kwargs):
+        user = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['name'] = user.first_name + user.last_name
+        return context

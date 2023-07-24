@@ -67,10 +67,15 @@ class LabelDeleteView(ProjectLoginRequiredMixin,
     template_name = 'delete.html'
     extra_context = {
         'title': _('Delete label'),
-        'name': str(model.name),
         'button_text': _('Yes, delete'),
     }
     success_url = reverse_lazy('label_list')
     success_message = _('Label is successfully deleted')
     denied_url = reverse_lazy('label_list')
     protected_message = _('Unable to delete a label because it is being used')
+
+    def get_context_data(self, **kwargs):
+        label = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['name'] = label.name
+        return context

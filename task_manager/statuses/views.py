@@ -67,10 +67,15 @@ class StatusDeleteView(ProjectLoginRequiredMixin,
     template_name = 'delete.html'
     extra_context = {
         'title': _('Delete status'),
-        'name': str(model.name),
         'button_text': _('Yes, delete'),
     }
     success_url = reverse_lazy('status_list')
     success_message = _('Status is successfully deleted')
     denied_url = reverse_lazy('status_list')
     protected_message = _('Unable to delete a status because it is being used')
+
+    def get_context_data(self, **kwargs):
+        status = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['name'] = status.name
+        return context

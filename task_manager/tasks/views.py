@@ -89,3 +89,9 @@ class TaskPageView(ProjectLoginRequiredMixin,
     model = Task
     template_name = 'task_page.html'
     context_object_name = 'task'
+
+    def get_context_data(self, **kwargs):
+        task = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['name'] = task.name
+        return context
