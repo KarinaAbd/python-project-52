@@ -30,6 +30,12 @@
             </td>
         </tr>
         {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="7">
+                {% trans 'No users registered yet' %}
+            </td>
+        </tr>
         {% endif %}
     </tbody>
 </table>
