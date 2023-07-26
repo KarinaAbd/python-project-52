@@ -37,8 +37,17 @@ class ProjectUserPassesTestMixin(UserPassesTestMixin):
             return redirect(self.denied_url)
         return super().dispatch(request, *args, **kwargs)
 
+
+class HandleUserPassesTestMixin(ProjectUserPassesTestMixin):
+
     def test_func(self):
         return self.get_object() == self.request.user
+
+
+class DeleteTaskPassesTestMixin(ProjectUserPassesTestMixin):
+
+    def test_func(self):
+        return self.get_object().author == self.request.user
 
 
 class ProjectDeletionMixin(DeletionMixin):

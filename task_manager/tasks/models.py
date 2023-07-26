@@ -48,6 +48,9 @@ class Task(models.Model):
         verbose_name=_('Creation date')
     )
 
+    def __str__(self) -> str:
+        return self.name
+
     class Meta:
         verbose_name = _('Task')
         verbose_name_plural = _('Tasks')

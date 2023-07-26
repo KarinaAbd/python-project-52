@@ -8,7 +8,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.mixins import (ProjectDeletionMixin,
                                  ProjectLoginRequiredMixin,
-                                 ProjectUserPassesTestMixin)
+                                 HandleUserPassesTestMixin)
 from task_manager.users.forms import UserForm
 from task_manager.users.models import User
 
@@ -38,7 +38,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 
 
 class UserUpdateView(ProjectLoginRequiredMixin,
-                     ProjectUserPassesTestMixin,
+                     HandleUserPassesTestMixin,
                      SuccessMessageMixin,
                      UpdateView):
     """
@@ -59,7 +59,7 @@ class UserUpdateView(ProjectLoginRequiredMixin,
 
 
 class UserDeleteView(ProjectLoginRequiredMixin,
-                     ProjectUserPassesTestMixin,
+                     HandleUserPassesTestMixin,
                      ProjectDeletionMixin,
                      SuccessMessageMixin,
                      DeleteView):
