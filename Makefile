@@ -20,5 +20,11 @@ check:
 lint:
 	poetry run flake8 ./task_manager/
 
+trans_start:
+	poetry run django-admin makemessages --ignore="static" --ignore=".env"  -l ru
+
+trans_finish:
+	poetry run django-admin compilemessages
+
 deploy:
 	poetry run gunicorn -w 5 task_manager.wsgi
