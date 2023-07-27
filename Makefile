@@ -17,6 +17,9 @@ start:
 check:
 	poetry check
 
+test:
+	$(MANAGE)  test
+
 lint:
 	poetry run flake8 ./task_manager/
 
