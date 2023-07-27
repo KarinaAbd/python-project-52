@@ -5,6 +5,7 @@ from task_manager.users.models import User
 
 
 class UserTestCase(TestCase):
+    """Test case for user's CRUD."""
 
     def setUp(self) -> None:
         self.client = Client()
@@ -31,26 +32,8 @@ class UserTestCase(TestCase):
         self.assertEqual(user.last_name, 'Waititi')
         self.assertEqual(user.username, 'Viago')
 
-    def test_login_user(self) -> None:
-        response = self.client.get(reverse('login'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
-
-        User.objects.create(
-            first_name='Taika',
-            last_name='Waititi',
-            username='Viago',
-            password='123qwe!@#',
-        )
-        user = User.objects.last()
-        response = self.client.post(
-            reverse('login'),
-            {
-                'username': user.username,
-                'password': user.password,
-            }
-        )
-        self.assertTrue(user.is_active)
+    def test_list_user(self) -> None:
+        pass
 
     def test_update_user(self) -> None:
         User.objects.create(

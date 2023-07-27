@@ -70,12 +70,8 @@ class UserDeleteView(ProjectLoginRequiredMixin,
     """
     model = User
     template_name = 'delete.html'
-    # context_object_name = 'user'
-    # user = User.objects.get(id=kwargs['pk'])
-
     extra_context = {
         'title': _('Delete user'),
-        # 'name': user.first_name + user.last_name,
         'button_text': _('Yes, delete'),
     }
     success_url = reverse_lazy('user_list')
