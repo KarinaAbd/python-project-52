@@ -3,20 +3,27 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import (CreateView, DeleteView, ListView, UpdateView,
                                   DetailView)
+from django_filters.views import FilterView
 
 from task_manager.mixins import (ProjectLoginRequiredMixin,
                                  DeleteTaskPassesTestMixin)
 from task_manager.tasks.forms import TaskForm
+from task_manager.tasks.filters import TaskFilter
 from task_manager.tasks.models import Task
 from task_manager.users.models import User
 
 
 class TaskListView(ProjectLoginRequiredMixin,
+                   FilterView,
                    ListView):
     """List of all tasks."""
     model = Task
+    filterset_class = TaskFilter
     template_name = 'tasks.html'
     context_object_name = 'tasks'
+    extra_context = {
+        'button_text': _('Show'),
+    }
 
 
 class TaskCreateView(ProjectLoginRequiredMixin,
