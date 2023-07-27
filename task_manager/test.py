@@ -61,9 +61,9 @@ class IndexTestCase(TestCase):
                 'password': user.password,
             }
         )
-        self.assertTrue(user.is_active)
+        self.assertTrue(user.is_authenticated)
 
-        response = self.client.get(reverse_lazy('logout'))
+        response = self.client.post(reverse_lazy('logout'), user=user)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy('index'))
-        # self.assertFalse(user.is_active) !!!!!!!!!!почему так?
+        # self.assertFalse(user.is_authenticated)
