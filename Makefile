@@ -18,7 +18,7 @@ check:
 	poetry check
 
 test:
-	$(MANAGE)  test
+	$(MANAGE)  test --keepdb
 
 lint:
 	poetry run flake8 ./task_manager/
