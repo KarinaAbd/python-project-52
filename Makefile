@@ -1,5 +1,8 @@
 MANAGE := poetry run python manage.py
 
+shell:
+	@$(MANAGE) shell
+
 install:
 	@poetry install
 
