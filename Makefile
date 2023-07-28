@@ -1,8 +1,5 @@
 MANAGE := poetry run python manage.py
 
-shell:
-	@$(MANAGE) shell
-
 install:
 	@poetry install
 
@@ -14,21 +11,22 @@ migrate: make-migration
 
 build: install migrate
 
-start:
-	$(MANAGE) runserver
+lint:
+	poetry run flake8 ./task_manager/
 
 check:
 	poetry check
 
+develop: lint check
+	poetry run coverage run --source='.' manage.py test task_manager
+	poetry run coverage html
+
 test:
-	$(MANAGE)  test --keepdb
+	$(MANAGE) test --keepdb
 
 test-coverage:
 	poetry run coverage run --source='.' manage.py test task_manager
 	poetry run coverage lcov
-
-lint:
-	poetry run flake8 ./task_manager/
 
 trans_start:
 	poetry run django-admin makemessages --ignore="static" --ignore=".env"  -l ru
@@ -36,5 +34,15 @@ trans_start:
 trans_finish:
 	poetry run django-admin compilemessages
 
+start:
+	$(MANAGE) runserver
+
+shell:
+	@$(MANAGE) shell
+
 deploy:
 	poetry run gunicorn -w 5 task_manager.wsgi
+
+clean:
+	rm -rf htmlcov
+	rm *.lcov

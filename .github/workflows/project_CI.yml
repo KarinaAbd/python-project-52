@@ -22,9 +22,7 @@ jobs:
       - name: Install dependencies
         run: make install
       - name: Linter check
-        run: |
-          make lint
-          echo ${{ secrets.DATABASE_URL }}
+        run: make lint
       - name: Run tests
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
