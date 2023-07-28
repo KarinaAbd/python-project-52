@@ -1,10 +1,26 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.views import RedirectURLMixin
 from django.db.models import ProtectedError
-from django.shortcuts import redirect
+from django.shortcuts import redirect, resolve_url
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import DeletionMixin
+
+
+class ProjectRedirectURLMixin(RedirectURLMixin):
+    next_page = None
+    success_message = None
+    info_message = None
+
+    def get_default_redirect_url(self):
+        """Return the default redirect URL."""
+        if self.next_page:
+            if self.success_message:
+                messages.success(self.request, self.success_message)
+            elif self.info_message:
+                messages.info(self.request, self.info_message)
+            return resolve_url(self.next_page)
 
 
 class ProjectLoginRequiredMixin(LoginRequiredMixin):
