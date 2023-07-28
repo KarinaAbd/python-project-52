@@ -38,5 +38,3 @@ jobs:
         with:
           coverageCommand: make test-coverage
           coverageLocations: ${{github.workspace}}/*.lcov:lcov
-      - name: Build and install package
-        run: make package
