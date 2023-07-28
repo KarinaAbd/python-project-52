@@ -135,8 +135,6 @@ class TaskTestCase(TestCase):
         self.assertRedirects(response, reverse('task_list'))
         task.refresh_from_db()
         self.assertEqual(task.name, 'TEST_updated_Task')
-        # self.assertContains(response, 'Taika Waititi', status_code=302)
-        # self.assertContains(response, 'Peter Kwill', status_code=302)
 
     def test_delete_task(self) -> None:
         task = Task.objects.create(

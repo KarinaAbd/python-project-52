@@ -47,13 +47,12 @@ class IndexTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='form.html')
 
-        User.objects.create(
+        user = User.objects.create(
             first_name='Taika',
             last_name='Waititi',
             username='Viago',
             password='123qwe!@#',
         )
-        user = User.objects.last()
         response = self.client.post(
             reverse_lazy('login'),
             {
@@ -66,4 +65,3 @@ class IndexTestCase(TestCase):
         response = self.client.post(reverse_lazy('logout'), user=user)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy('index'))
-        # self.assertFalse(user.is_authenticated)
