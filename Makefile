@@ -20,6 +20,10 @@ check:
 test:
 	$(MANAGE)  test --keepdb
 
+test-coverage:
+	poetry run coverage run --source='.' manage.py test task_manager
+	poetry run coverage lcov
+
 lint:
 	poetry run flake8 ./task_manager/
 
