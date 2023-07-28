@@ -55,13 +55,13 @@ class ProjectUserPassesTestMixin(UserPassesTestMixin):
 
 
 class HandleUserPassesTestMixin(ProjectUserPassesTestMixin):
-
+    """Only usere can change information about him or delete his profile."""
     def test_func(self):
         return self.get_object() == self.request.user
 
 
 class DeleteTaskPassesTestMixin(ProjectUserPassesTestMixin):
-
+    """Only author can delete task."""
     def test_func(self):
         return self.get_object().author == self.request.user
 
