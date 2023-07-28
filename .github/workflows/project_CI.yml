@@ -21,12 +21,19 @@ jobs:
           cache: poetry
       - name: Install dependencies
         run: make install
-      - run: make lint
-      - run: make test
+      - name: Linter check
+        run: make lint
+      - name: Run tests
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: make test
       - name: Check & publish code coverage
         uses: paambaati/codeclimate-action@v3.2.0
         env:
-          CC_TEST_REPORTER_ID: 545c550b0027e8a6455aee500e8aa7586518392a76dc5c0e133638917a4eb0e1
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         with:
           coverageCommand: make test-coverage
           coverageLocations: ${{github.workspace}}/*.lcov:lcov
