@@ -22,7 +22,7 @@ develop: lint check
 	poetry run coverage html
 
 test:
-	$(MANAGE) test --keepdb
+	$(MANAGE) test
 
 test-coverage:
 	poetry run coverage run --source='.' manage.py test task_manager
