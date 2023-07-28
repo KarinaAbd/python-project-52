@@ -3,9 +3,10 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from task_manager.mixins import ProjectDeletionMixin, ProjectLoginRequiredMixin
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
+from task_manager.mixins import (ProjectDeletionMixin, ProjectFormMixin,
+                                 ProjectLoginRequiredMixin)
 
 
 class LabelListView(ProjectLoginRequiredMixin, ListView):
@@ -55,6 +56,7 @@ class LabelUpdateView(ProjectLoginRequiredMixin,
 
 
 class LabelDeleteView(ProjectLoginRequiredMixin,
+                      ProjectFormMixin,
                       ProjectDeletionMixin,
                       SuccessMessageMixin,
                       DeleteView):
@@ -73,9 +75,3 @@ class LabelDeleteView(ProjectLoginRequiredMixin,
     success_message = _('Label is successfully deleted')
     denied_url = reverse_lazy('label_list')
     protected_message = _('Unable to delete a label because it is being used')
-
-    def get_context_data(self, **kwargs):
-        label = self.get_object()
-        context = super().get_context_data(**kwargs)
-        context['name'] = label.name
-        return context

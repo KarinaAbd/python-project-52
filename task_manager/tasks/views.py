@@ -1,14 +1,16 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import (CreateView, DeleteView, ListView, UpdateView,
-                                  DetailView)
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
 from django_filters.views import FilterView
 
-from task_manager.mixins import (ProjectLoginRequiredMixin,
-                                 DeleteTaskPassesTestMixin)
-from task_manager.tasks.forms import TaskForm
+from task_manager.mixins import (DeleteTaskPassesTestMixin,
+                                 ProjectDeletionMixin,
+                                 ProjectLoginRequiredMixin,
+                                 ProjectFormMixin)
 from task_manager.tasks.filters import TaskFilter
+from task_manager.tasks.forms import TaskForm
 from task_manager.tasks.models import Task
 from task_manager.users.models import User
 
@@ -70,6 +72,8 @@ class TaskUpdateView(ProjectLoginRequiredMixin,
 
 class TaskDeleteView(ProjectLoginRequiredMixin,
                      DeleteTaskPassesTestMixin,
+                     ProjectFormMixin,
+                     ProjectDeletionMixin,
                      SuccessMessageMixin,
                      DeleteView):
     """
@@ -81,19 +85,12 @@ class TaskDeleteView(ProjectLoginRequiredMixin,
     template_name = 'delete.html'
     extra_context = {
         'title': _('Delete task'),
-        # 'name': str(model.name),
         'button_text': _('Yes, delete'),
     }
     success_url = reverse_lazy('task_list')
     success_message = _('Task is successfully deleted')
     denied_url = reverse_lazy('task_list')
     permission_denied_message = _('The task can be deleted only by its author')
-
-    def get_context_data(self, **kwargs):
-        task = self.get_object()
-        context = super().get_context_data(**kwargs)
-        context['name'] = task.name
-        return context
 
 
 class TaskPageView(ProjectLoginRequiredMixin,

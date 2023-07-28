@@ -5,7 +5,7 @@ from django.db.models import ProtectedError
 from django.shortcuts import redirect, resolve_url
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.views.generic.edit import DeletionMixin
+from django.views.generic.edit import DeletionMixin, FormMixin
 
 
 class ProjectRedirectURLMixin(RedirectURLMixin):
@@ -14,7 +14,7 @@ class ProjectRedirectURLMixin(RedirectURLMixin):
     info_message = None
 
     def get_default_redirect_url(self):
-        """Return the default redirect URL."""
+        """Return the default redirect URL with message."""
         if self.next_page:
             if self.success_message:
                 messages.success(self.request, self.success_message)
@@ -27,6 +27,7 @@ class ProjectLoginRequiredMixin(LoginRequiredMixin):
     """
     Authentication check.
     Restricts access without authentication.
+    Show message about necessarity to log in and redirect on login page.
     """
     denied_url = reverse_lazy('login')
     denied_message = _('You are not logged in! Please log in.')
@@ -40,7 +41,7 @@ class ProjectLoginRequiredMixin(LoginRequiredMixin):
 
 class ProjectUserPassesTestMixin(UserPassesTestMixin):
     """
-    Deny a request with a permission error
+    Deny a request with a permission error message
     if authentificated user try to change not his stuff.
     """
     denied_url = None
@@ -55,13 +56,13 @@ class ProjectUserPassesTestMixin(UserPassesTestMixin):
 
 
 class HandleUserPassesTestMixin(ProjectUserPassesTestMixin):
-    """Only usere can change information about him or delete his profile."""
+    """Only user can change information about him or delete his profile."""
     def test_func(self):
         return self.get_object() == self.request.user
 
 
 class DeleteTaskPassesTestMixin(ProjectUserPassesTestMixin):
-    """Only author can delete task."""
+    """Only author can delete his task."""
     def test_func(self):
         return self.get_object().author == self.request.user
 
@@ -80,3 +81,13 @@ class ProjectDeletionMixin(DeletionMixin):
         except ProtectedError:
             messages.error(request, self.protected_message)
             return redirect(self.denied_url)
+
+
+class ProjectFormMixin(FormMixin):
+
+    def get_context_data(self, **kwargs):
+        """To display the name of the object to be deleted."""
+        object = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['name'] = object.name
+        return context

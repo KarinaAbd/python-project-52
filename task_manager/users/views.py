@@ -6,9 +6,9 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from task_manager.mixins import (ProjectDeletionMixin,
-                                 ProjectLoginRequiredMixin,
-                                 HandleUserPassesTestMixin)
+from task_manager.mixins import (HandleUserPassesTestMixin,
+                                 ProjectDeletionMixin,
+                                 ProjectLoginRequiredMixin)
 from task_manager.users.forms import UserForm
 from task_manager.users.models import User
 
@@ -43,7 +43,7 @@ class UserUpdateView(ProjectLoginRequiredMixin,
                      UpdateView):
     """
     Update existing and logged in user.
-    The user can only edit himself.
+    Only user can edit himself.
     """
     model = User
     form_class = UserForm
@@ -65,7 +65,6 @@ class UserDeleteView(ProjectLoginRequiredMixin,
                      DeleteView):
     """
     Delete existing and logged in user.
-    The user can only edit himself.
     The user can be deleted only if he isn't being used.
     """
     model = User
