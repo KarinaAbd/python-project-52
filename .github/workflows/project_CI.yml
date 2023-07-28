@@ -9,6 +9,7 @@ permissions: read-all
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: task_manager_env
 
     steps:
       - uses: actions/checkout@v3
