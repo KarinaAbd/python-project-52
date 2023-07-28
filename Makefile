@@ -1,4 +1,5 @@
 MANAGE := poetry run python manage.py
+RUN := poetry run
 
 install:
 	@poetry install
@@ -12,27 +13,27 @@ migrate: make-migration
 build: install migrate
 
 lint:
-	poetry run flake8 ./task_manager/
+	$(RUN) flake8 ./task_manager/
 
 check:
 	poetry check
 
 develop: lint check
-	poetry run coverage run --source='.' manage.py test task_manager
-	poetry run coverage html
+	$(RUN) coverage run --source='.' manage.py test task_manager
+	$(RUN) coverage html
 
 test:
 	$(MANAGE) test
 
 test-coverage:
-	poetry run coverage run --source='.' manage.py test task_manager
-	poetry run coverage lcov
+	$(RUN) coverage run --source='.' manage.py test task_manager
+	$(RUN) coverage lcov
 
 trans_start:
-	poetry run django-admin makemessages --ignore="static" --ignore=".env"  -l ru
+	$(RUN) django-admin makemessages --ignore="static" --ignore=".env"  -l ru
 
 trans_finish:
-	poetry run django-admin compilemessages
+	$(RUN) django-admin compilemessages
 
 start:
 	$(MANAGE) runserver
@@ -41,7 +42,7 @@ shell:
 	@$(MANAGE) shell
 
 deploy:
-	poetry run gunicorn -w 5 task_manager.wsgi
+	$(RUN) gunicorn -w 5 task_manager.wsgi
 
 clean:
 	rm -rf htmlcov
