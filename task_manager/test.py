@@ -1,6 +1,9 @@
+import json
+
 from django.test import Client, TestCase
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+
 from task_manager.users.models import User
 
 
@@ -65,3 +68,8 @@ class IndexTestCase(TestCase):
         response = self.client.post(reverse_lazy('logout'), user=user)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy('index'))
+
+
+def get_fixture_content(file_path):
+    with open(f'task_manager/fixtures/{file_path}', 'r') as input:
+        return json.load(input)

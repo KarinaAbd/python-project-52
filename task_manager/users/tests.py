@@ -2,11 +2,15 @@ from django.test import Client, TestCase
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from task_manager.test import get_fixture_content
 from task_manager.users.models import User
 
 
 class UserTestCase(TestCase):
     """Test case for CRUD of user."""
+    # fixtures = ['user.json']
+    user = get_fixture_content('user.json')
+    user_data = user['user_1'].copy()
 
     def setUp(self) -> None:
         self.client = Client()
@@ -16,16 +20,8 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='form.html')
 
-        response = self.client.post(
-            reverse('user_create'),
-            {
-                'first_name': 'Taika',
-                'last_name': 'Waititi',
-                'username': 'Viago',
-                'password1': '123qwe!@#',
-                'password2': '123qwe!@#',
-            }
-        )
+        response = self.client.post(reverse('user_create'),
+                                    data=self.user_data)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
         user = User.objects.last()
@@ -34,12 +30,8 @@ class UserTestCase(TestCase):
         self.assertEqual(user.username, 'Viago')
 
     def test_list_user(self) -> None:
-        User.objects.create(
-            first_name='Taika',
-            last_name='Waititi',
-            username='Viago',
-            password='123qwe!@#',
-        )
+        self.client.post(reverse('user_create'),
+                         data=self.user_data)
         response = self.client.get(reverse('user_list'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='users.html')
@@ -51,12 +43,9 @@ class UserTestCase(TestCase):
         self.assertContains(response, _('Delete'), status_code=200)
 
     def test_update_user(self) -> None:
-        user = User.objects.create(
-            first_name='Taika',
-            last_name='Waititi',
-            username='Viago',
-            password='123qwe!@#',
-        )
+        self.client.post(reverse('user_create'),
+                         data=self.user_data)
+        user = User.objects.last()
         self.client.force_login(user)
 
         response = self.client.get(reverse('user_update',
@@ -83,14 +72,11 @@ class UserTestCase(TestCase):
         self.assertTrue(user.check_password('123qwe!@#'))
 
     def test_delete_user(self) -> None:
-        user = User.objects.create(
-            first_name='Taika',
-            last_name='Waititi',
-            username='Viago',
-            password='123qwe!@#',
-        )
-
+        self.client.post(reverse('user_create'),
+                         data=self.user_data)
+        user = User.objects.last()
         self.client.force_login(user)
+
         response = self.client.get(reverse('user_delete',
                                            kwargs={'pk': user.id}))
         self.assertEqual(response.status_code, 200)
