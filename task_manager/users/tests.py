@@ -13,11 +13,13 @@ class UserTestCase(TestCase):
                 'statuses.json',
                 'labels.json',
                 'tasks.json']
-    user = get_fixture_content('test_users.json')
-    user_data = user['test_user_1'].copy()
+
+    test_data = get_fixture_content('test_data.json')
+    user_data = test_data['test_user'].copy()
 
     def setUp(self) -> None:
         self.client = Client()
+        self.user_count = User.objects.count()
 
     def test_create_user(self) -> None:
         response = self.client.get(reverse('user_create'))
@@ -29,9 +31,9 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
         user = User.objects.last()
-        self.assertEqual(user.first_name, 'Jemaine')
-        self.assertEqual(user.last_name, 'Clement')
-        self.assertEqual(user.username, 'Vladislav')
+        self.assertEqual(user.first_name, self.user_data['first_name'])
+        self.assertEqual(user.last_name, self.user_data['last_name'])
+        self.assertEqual(user.username, self.user_data['username'])
 
     def test_list_user(self) -> None:
         self.client.post(reverse('user_create'),
@@ -41,8 +43,13 @@ class UserTestCase(TestCase):
         self.assertTemplateUsed(response, template_name='users.html')
         self.assertContains(response, _('Full name'), status_code=200)
         self.assertContains(response, _('Creation date'), status_code=200)
-        self.assertContains(response, 'Jemaine Clement', status_code=200)
-        self.assertContains(response, 'Vladislav', status_code=200)
+        self.assertContains(
+            response,
+            f"{self.user_data['first_name']} {self.user_data['last_name']}",
+            status_code=200
+        )
+        self.assertContains(response, self.user_data['username'],
+                            status_code=200)
         self.assertContains(response, _('Update'), status_code=200)
         self.assertContains(response, _('Delete'), status_code=200)
 
@@ -60,20 +67,20 @@ class UserTestCase(TestCase):
         response = self.client.post(
             reverse('user_update', kwargs={'pk': user.id}),
             {
-                'first_name': 'Jemaine',
-                'last_name': 'Clement',
+                'first_name': self.user_data['first_name'],
+                'last_name': self.user_data['last_name'],
                 'username': 'Vlad',
-                'password1': 'torture100',
-                'password2': 'torture100'
+                'password1': self.user_data['password1'],
+                'password2': self.user_data['password2']
             }
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('user_list'))
         user.refresh_from_db()
-        self.assertEqual(user.first_name, 'Jemaine')
-        self.assertEqual(user.last_name, 'Clement')
+        self.assertEqual(user.first_name, self.user_data['first_name'])
+        self.assertEqual(user.last_name, self.user_data['last_name'])
         self.assertEqual(user.username, 'Vlad')
-        self.assertTrue(user.check_password('torture100'))
+        self.assertTrue(user.check_password(self.user_data['password1']))
 
     def test_delete_user(self) -> None:
         self.client.post(reverse('user_create'),
@@ -90,4 +97,4 @@ class UserTestCase(TestCase):
                                             kwargs={'pk': user.id}))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('user_list'))
-        self.assertEqual(User.objects.count(), 2)
+        self.assertEqual(User.objects.count(), self.user_count)

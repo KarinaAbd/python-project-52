@@ -1,0 +1,22 @@
+{
+    "test_user": {
+        "first_name": "Jemaine",
+        "last_name": "Clement",
+        "username": "Vladislav",
+        "password1": "torture100",
+        "password2": "torture100"
+    },
+    "test_status": {
+        "name": "RUNNING TESTS"
+    },
+    "test_label": {
+        "name": "WORK"
+    },
+    "test_task": {
+        "name": "Rewrite tests",
+        "description": "Use fixtures",
+        "status": 1,
+        "executor": 1,
+        "labels": [1, 2]
+    }
+}
