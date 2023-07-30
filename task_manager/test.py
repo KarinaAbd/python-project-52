@@ -12,6 +12,12 @@ class IndexTestCase(TestCase):
     Test case for homepage, log in and sign up pages,
     UserLogInView and UserLogOutView.
     """
+    fixtures = ['time.json',
+                'users.json',
+                'statuses.json',
+                'labels.json',
+                'tasks.json']
+
     def setUP(self) -> None:
         self.client = Client()
 
@@ -50,12 +56,7 @@ class IndexTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='form.html')
 
-        user = User.objects.create(
-            first_name='Taika',
-            last_name='Waititi',
-            username='Viago',
-            password='123qwe!@#',
-        )
+        user = User.objects.last()
         response = self.client.post(
             reverse_lazy('login'),
             {
