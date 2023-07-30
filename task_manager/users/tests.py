@@ -8,7 +8,11 @@ from task_manager.users.models import User
 
 class UserTestCase(TestCase):
     """Test case for CRUD of user."""
-    fixtures = ['statuses.json', 'labels.json']
+    fixtures = ['time.json',
+                'users.json',
+                'statuses.json',
+                'labels.json',
+                'tasks.json']
     user = get_fixture_content('test_users.json')
     user_data = user['test_user_1'].copy()
 
@@ -63,8 +67,8 @@ class UserTestCase(TestCase):
                 'password2': 'torture100'
             }
         )
-        # self.assertEqual(response.status_code, 302)
-        # self.assertRedirects(response, reverse('user_list'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('user_list'))
         user.refresh_from_db()
         self.assertEqual(user.first_name, 'Jemaine')
         self.assertEqual(user.last_name, 'Clement')
@@ -86,4 +90,4 @@ class UserTestCase(TestCase):
                                             kwargs={'pk': user.id}))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('user_list'))
-        self.assertEqual(User.objects.count(), 0)
+        self.assertEqual(User.objects.count(), 2)
