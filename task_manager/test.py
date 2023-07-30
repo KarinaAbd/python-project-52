@@ -66,9 +66,10 @@ class IndexTestCase(TestCase):
         )
         self.assertTrue(user.is_authenticated)
 
-        response = self.client.post(reverse_lazy('logout'), user=user)
+        response = self.client.post(reverse_lazy('logout'))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy('index'))
+        # self.assertFalse(user.is_authenticated)
 
 
 def get_fixture_content(file_path):
