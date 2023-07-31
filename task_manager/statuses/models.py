@@ -7,7 +7,7 @@ class Status(models.Model):
         max_length=150,
         unique=True,
         blank=False,
-        verbose_name=_('Status name')
+        verbose_name=_('Name')
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-31 17:57+0300\n"
+"POT-Creation-Date: 2023-07-31 18:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,9 +20,13 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: task_manager/labels/models.py:10
-msgid "Label name"
-msgstr "Название метки"
+#: task_manager/labels/models.py:10 task_manager/labels/tests.py:45
+#: task_manager/statuses/models.py:10 task_manager/statuses/tests.py:45
+#: task_manager/tasks/models.py:14 task_manager/tasks/tests.py:53
+#: task_manager/templates/labels.html:12
+#: task_manager/templates/statuses.html:12 task_manager/templates/tasks.html:22
+msgid "Name"
+msgstr "Имя"
 
 #: task_manager/labels/models.py:14 task_manager/labels/tests.py:46
 #: task_manager/statuses/models.py:14 task_manager/statuses/tests.py:46
@@ -45,12 +49,6 @@ msgstr "Метка"
 #: task_manager/templates/task_page.html:29
 msgid "Labels"
 msgstr "Метки"
-
-#: task_manager/labels/tests.py:45 task_manager/statuses/tests.py:45
-#: task_manager/tasks/tests.py:53 task_manager/templates/labels.html:12
-#: task_manager/templates/statuses.html:12 task_manager/templates/tasks.html:22
-msgid "Name"
-msgstr "Название"
 
 #: task_manager/labels/tests.py:48 task_manager/labels/views.py:54
 #: task_manager/statuses/tests.py:49 task_manager/statuses/views.py:54
@@ -115,10 +113,6 @@ msgstr "Невозможно удалить метку, потому что он
 msgid "You are not logged in! Please log in."
 msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 
-#: task_manager/statuses/models.py:10
-msgid "Status name"
-msgstr "Название статуса"
-
 #: task_manager/statuses/models.py:21 task_manager/tasks/models.py:24
 #: task_manager/tasks/tests.py:54 task_manager/tasks/tests.py:73
 #: task_manager/templates/task_page.html:21
@@ -163,13 +157,9 @@ msgstr "Невозможно удалить статус, потому что о
 msgid "Only my tasks"
 msgstr "Только мои задачи"
 
-#: task_manager/tasks/models.py:14
-msgid "Task name"
-msgstr "Название задачи"
-
 #: task_manager/tasks/models.py:19
-msgid "Task description"
-msgstr "Описание задачи"
+msgid "Description"
+msgstr "Описание"
 
 #: task_manager/tasks/models.py:29 task_manager/tasks/tests.py:55
 #: task_manager/tasks/tests.py:74 task_manager/templates/task_page.html:13
