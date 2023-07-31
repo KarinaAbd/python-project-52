@@ -37,7 +37,7 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 #     'task-manager-by-karina.onrender.com/'
 # ]
 
-ALLOWED_HOSTS = '*'
+ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://127.0.0.1',
