@@ -38,7 +38,8 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    '0.0.0.0',
+    'https://127.0.0.1',
+    'https://0.0.0.0',
     'https://task-manager-by-karina.onrender.com/'
 ]
 
@@ -164,7 +165,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / "staticfiles"]
+# STATICFILES_DIRS = [BASE_DIR / "staticfiles"]
 
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -175,6 +176,8 @@ if not DEBUG:
             "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",  # noqa E501
         },
     }
+else:
+    STATIC_ROOT = BASE_DIR
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
