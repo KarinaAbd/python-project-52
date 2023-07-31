@@ -42,7 +42,7 @@ shell:
 	@$(MANAGE) shell
 
 deploy:
-	$(RUN) gunicorn task_manager.wsgi:application
+	$(RUN) gunicorn task_manager.wsgi
 
 clean:
 	rm -rf htmlcov
