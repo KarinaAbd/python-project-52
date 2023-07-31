@@ -154,8 +154,8 @@ msgid "Unable to delete a status because it is being used"
 msgstr "Невозможно удалить статус, потому что он используется"
 
 #: task_manager/tasks/filters.py:16
-msgid "Only my tasks"
-msgstr "Только мои задачи"
+msgid "Only own tasks"
+msgstr "Только свои задачи"
 
 #: task_manager/tasks/models.py:19
 msgid "Description"
@@ -184,7 +184,7 @@ msgstr "Задачи"
 
 #: task_manager/tasks/views.py:27
 msgid "Show"
-msgstr " Показать"
+msgstr "Показать"
 
 #: task_manager/tasks/views.py:42 task_manager/templates/tasks.html:7
 msgid "Create task"
@@ -332,7 +332,7 @@ msgstr "Пользователь успешно удален"
 
 #: task_manager/users/views.py:80
 msgid "Unable to delete a user because he is being used"
-msgstr "Невозможно удалить пользователя, потому что он используется "
+msgstr "Невозможно удалить пользователя, потому что он используется"
 
 #: task_manager/views.py:20
 msgid "You are logged in"

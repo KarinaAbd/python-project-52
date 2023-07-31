@@ -13,7 +13,7 @@ class TaskFilter(FilterSet):
     executor = ModelChoiceFilter(queryset=User.objects.all())
     labels = ModelChoiceFilter(queryset=Label.objects.all(), label=_("Label"))
     self_tasks = BooleanFilter(
-        label=_('Only my tasks'),
+        label=_('Only own tasks'),
         widget=CheckboxInput,
         method='filter_own_tasks'
     )
