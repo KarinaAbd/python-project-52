@@ -30,12 +30,14 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = [
-    'webserver',
-    '127.0.0.1',
-    '0.0.0.0',
-    'task-manager-by-karina.onrender.com/'
-]
+# ALLOWED_HOSTS = [
+#     'webserver',
+#     '127.0.0.1',
+#     '0.0.0.0',
+#     'task-manager-by-karina.onrender.com/'
+# ]
+
+ALLOWED_HOSTS = '*'
 
 CSRF_TRUSTED_ORIGINS = [
     'https://127.0.0.1',
