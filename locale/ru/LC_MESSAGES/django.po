@@ -298,7 +298,7 @@ msgstr "Зарегестрированных пользователей пока
 
 #: task_manager/test.py:42 task_manager/users/views.py:36
 msgid "Register"
-msgstr "Зарегестрировать"
+msgstr "Зарегистрировать"
 
 #: task_manager/test.py:52 task_manager/views.py:17
 msgid "Enter"
