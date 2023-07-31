@@ -7,7 +7,7 @@
 try [Task Manager](https://task-manager-bykarina.onrender.com/) yourself
 ***
 
-![tutorial](./task_manager/static/task_manager_usage.gif)
+![tutorial](./static/task_manager_usage.gif)
 
 This repository was created as part of [a Hexlet study project](https://ru.hexlet.io/programs/python/projects/52). "Task Manager" is a a web application that allows you to set tasks, assign executors and change their statuses. Registration and authentication are required to work with the system.
 
