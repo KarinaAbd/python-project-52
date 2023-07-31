@@ -33,10 +33,14 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = [
     'webserver',
     '127.0.0.1',
+    '0.0.0.0',
     'https://task-manager-by-karina.onrender.com/'
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://task-manager-by-karina.onrender.com/']
+CSRF_TRUSTED_ORIGINS = [
+    '0.0.0.0',
+    'https://task-manager-by-karina.onrender.com/'
+]
 
 # Application definition
 
@@ -69,7 +73,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
-STATIC_ROOT = BASE_DIR
+# STATIC_ROOT = BASE_DIR
 
 TEMPLATES = [
     {
