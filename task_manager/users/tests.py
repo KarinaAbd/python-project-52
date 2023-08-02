@@ -133,7 +133,7 @@ class UserTestCase(TestCase):
 
 
 class UserWrongTestCase(TestCase):
-    """Test case for CRUD of user eith wrong conditions."""
+    """Test case for CRUD of user with wrong conditions."""
     fixtures = ['time.json',
                 'users.json',
                 'statuses.json',

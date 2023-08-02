@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from task_manager.labels.models import Label
+from task_manager.tasks.models import Task
 from task_manager.test import get_fixture_content
 from task_manager.users.models import User
 
@@ -105,3 +106,34 @@ class LabelTestCase(TestCase):
             str(messages_list[0]),
             _('Label is successfully deleted')
         )
+
+
+class LabelWrongTestCase(TestCase):
+    """Test case for CRUD of label with wrong conditions."""
+    fixtures = ['time.json',
+                'users.json',
+                'statuses.json',
+                'labels.json',
+                'tasks.json']
+
+    def setUp(self) -> None:
+        self.client = Client()
+        self.labels_count = Label.objects.count()
+        self.user = User.objects.last()
+        self.client.force_login(self.user)
+
+    def test_delete_used_label(self) -> None:
+        task = Task.objects.last()
+        labels = task.labels.all()
+        response = self.client.post(reverse('label_delete',
+                                            kwargs={'pk': labels[0].id}))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('label_list'))
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Unable to delete a label because it is being used')
+        )
+        self.assertEqual(Label.objects.count(), self.labels_count)

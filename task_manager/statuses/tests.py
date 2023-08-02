@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from task_manager.statuses.models import Status
+from task_manager.tasks.models import Task
 from task_manager.test import get_fixture_content
 from task_manager.users.models import User
 
@@ -106,3 +107,33 @@ class StatusTestCase(TestCase):
             str(messages_list[0]),
             _('Status is successfully deleted')
         )
+
+
+class StatusWrongTestCase(TestCase):
+    """Test case for CRUD of status with wrong conditions."""
+    fixtures = ['time.json',
+                'users.json',
+                'statuses.json',
+                'labels.json',
+                'tasks.json']
+
+    def setUp(self) -> None:
+        self.client = Client()
+        self.status_count = Status.objects.count()
+        self.user = User.objects.last()
+        self.client.force_login(self.user)
+
+    def test_delete_used_status(self) -> None:
+        task = Task.objects.last()
+        response = self.client.post(reverse('status_delete',
+                                            kwargs={'pk': task.status.id}))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('status_list'))
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Unable to delete a status because it is being used')
+        )
+        self.assertEqual(Status.objects.count(), self.status_count)
