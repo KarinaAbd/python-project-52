@@ -11,8 +11,6 @@ class TimestampedModel(models.Model):
 
 class User(AbstractUser, TimestampedModel):
     """A task manager user."""
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
 
     def __str__(self) -> str:
         return self.get_full_name()
