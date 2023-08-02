@@ -1,5 +1,6 @@
 import json
 
+from django.contrib.messages.storage.cookie import CookieStorage
 from django.test import Client, TestCase
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -65,11 +66,25 @@ class IndexTestCase(TestCase):
             }
         )
         self.assertTrue(user.is_authenticated)
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('You are logged in')
+        )
 
         response = self.client.post(reverse_lazy('logout'))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy('index'))
         # self.assertFalse(user.is_authenticated)
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('You are logged out')
+        )
 
 
 def get_fixture_content(file_path):
