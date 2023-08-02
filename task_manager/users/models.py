@@ -14,7 +14,5 @@ class User(AbstractUser, TimestampedModel):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
 
-    REQUIRED_FIELDS = ['first_name', 'last_name']
-
     def __str__(self) -> str:
         return self.get_full_name()
