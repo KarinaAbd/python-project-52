@@ -80,13 +80,13 @@ class IndexTestCase(TestCase):
 
         # self.assertFalse(user.is_authenticated)
 
-        # messages_list = CookieStorage(response)._decode(
-        #     response.cookies['messages'].value
-        # )
-        # self.assertEqual(
-        #     str(messages_list[0]),
-        #     _('You are logged out')
-        # )
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('You are logged out')
+        )
 
 
 class LoginMixinTestCase(TestCase):

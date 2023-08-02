@@ -33,7 +33,10 @@
         <a class="nav-link" href="{% url 'task_list' %}">{% trans "Tasks" %}</a>
       </div>
       <div class="p-2">
-        <a class="nav-link" href="{% url 'logout' %}">{% trans "Log Out" %}</a>
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <input class="btn nav-link" type="submit" value="{% trans 'Log Out' %}">
+        </form>
       </div>
       {% else %}
       <div class="p-2">
