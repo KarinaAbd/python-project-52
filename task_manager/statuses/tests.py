@@ -1,3 +1,4 @@
+from django.contrib.messages.storage.cookie import CookieStorage
 from django.test import Client, TestCase
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -35,6 +36,13 @@ class StatusTestCase(TestCase):
         self.assertRedirects(response, reverse('status_list'))
         status = Status.objects.last()
         self.assertEqual(status.name, self.status_data['name'])
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Status is successfully created')
+        )
 
     def test_list_status(self) -> None:
         self.client.post(reverse('status_create'),
@@ -66,6 +74,13 @@ class StatusTestCase(TestCase):
         self.assertRedirects(response, reverse('status_list'))
         status.refresh_from_db()
         self.assertEqual(status.name, 'RUNNING TESTS again')
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Status is successfully updated')
+        )
 
     def test_delete_status(self) -> None:
         self.client.post(reverse('status_create'),
@@ -84,3 +99,10 @@ class StatusTestCase(TestCase):
         self.assertNotContains(response, self.status_data['name'],
                                status_code=302)
         self.assertEqual(Status.objects.count(), self.status_count)
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Status is successfully deleted')
+        )

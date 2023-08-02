@@ -1,3 +1,4 @@
+from django.contrib.messages.storage.cookie import CookieStorage
 from django.test import Client, TestCase
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -35,6 +36,13 @@ class LabelTestCase(TestCase):
         self.assertRedirects(response, reverse('label_list'))
         label = Label.objects.last()
         self.assertEqual(label.name, self.label_data['name'])
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Label is successfully created')
+        )
 
     def test_list_label(self) -> None:
         self.client.post(reverse('label_create'),
@@ -65,6 +73,13 @@ class LabelTestCase(TestCase):
         self.assertRedirects(response, reverse('label_list'))
         label.refresh_from_db()
         self.assertEqual(label.name, 'BEST_WORK_EVER')
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Label is successfully updated')
+        )
 
     def test_delete_label(self) -> None:
         self.client.post(reverse('label_create'),
@@ -83,3 +98,10 @@ class LabelTestCase(TestCase):
         self.assertNotContains(response, self.label_data['name'],
                                status_code=302)
         self.assertEqual(Label.objects.count(), self.labels_count)
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Label is successfully deleted')
+        )

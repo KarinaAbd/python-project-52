@@ -1,3 +1,4 @@
+from django.contrib.messages.storage.cookie import CookieStorage
 from django.test import Client, TestCase
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -43,6 +44,13 @@ class TaskTestCase(TestCase):
                          Status.objects.get(id=self.task_data['status']))
         self.assertEqual(task.executor,
                          User.objects.get(id=self.task_data['executor']))
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Task is successfully created')
+        )
 
     def test_list_task(self) -> None:
         self.client.post(reverse('task_create'),
@@ -109,6 +117,13 @@ class TaskTestCase(TestCase):
         self.assertRedirects(response, reverse('task_list'))
         task.refresh_from_db()
         self.assertEqual(task.name, 'Rewrite tests before 6pm')
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Task is successfully updated')
+        )
 
     def test_delete_task(self) -> None:
         self.client.post(reverse('task_create'),
@@ -127,3 +142,10 @@ class TaskTestCase(TestCase):
         self.assertNotContains(response, self.task_data['name'],
                                status_code=302)
         self.assertEqual(Task.objects.count(), self.task_count)
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('Task is successfully deleted')
+        )
