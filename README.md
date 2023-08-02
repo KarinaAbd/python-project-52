@@ -20,13 +20,7 @@ cd python-project-52/
 # install poetry
 make install
 ```
-Create `.env` file in the root folder and add following variables:
-```python
-DATABASE_URL = # For develop can be used sqlite3, for production PostgreSQL
-SECRET_KEY = # Necessary for Django
-LANGUAGE = # By default the app will use ru-ru locale, you can set also en-us
-DEBUG = True # If not set, value will be False
-```
+Create `.env` file based on the `.env_example` for right project work.
 And run it local:
 ```bash
 make build
