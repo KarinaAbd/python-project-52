@@ -1,8 +1,8 @@
 import json
 
-# from django.contrib.messages.storage.cookie import CookieStorage
+from django.contrib.messages.storage.cookie import CookieStorage
 from django.test import Client, TestCase
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from task_manager.users.models import User
@@ -87,6 +87,31 @@ class IndexTestCase(TestCase):
         #     str(messages_list[0]),
         #     _('You are logged out')
         # )
+
+
+class LoginMixinTestCase(TestCase):
+    fixtures = ['time.json',
+                'users.json',
+                'statuses.json',
+                'labels.json',
+                'tasks.json']
+
+    def setUP(self) -> None:
+        self.client = Client()
+
+    def test_access_without_login(self) -> None:
+        user = User.objects.last()
+        response = self.client.get(reverse('user_update',
+                                           kwargs={'pk': user.id}))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('login'))
+        messages_list = CookieStorage(response)._decode(
+            response.cookies['messages'].value
+        )
+        self.assertEqual(
+            str(messages_list[0]),
+            _('You are not logged in! Please log in.')
+        )
 
 
 def get_fixture_content(file_path):

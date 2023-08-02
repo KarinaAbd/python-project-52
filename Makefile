@@ -45,5 +45,5 @@ deploy:
 	$(RUN) gunicorn task_manager.wsgi
 
 clean:
-	rm -rf htmlcov
-	rm *.lcov
+	rm .coverage
+	rm -rf *lcov

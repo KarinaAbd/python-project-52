@@ -29,13 +29,13 @@ class ProjectLoginRequiredMixin(LoginRequiredMixin):
     Restricts access without authentication.
     Show message about necessarity to log in and redirect on login page.
     """
-    denied_url = reverse_lazy('login')
+    login_url = reverse_lazy('login')
     denied_message = _('You are not logged in! Please log in.')
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.error(self.request, self.denied_message)
-            return redirect(self.denied_url)
+            return redirect(self.login_url)
         return super().dispatch(request, *args, **kwargs)
 
 
