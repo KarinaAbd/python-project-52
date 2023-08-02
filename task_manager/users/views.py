@@ -9,7 +9,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from task_manager.mixins import (HandleUserPassesTestMixin,
                                  ProtectUsedObjectsDeletionMixin,
                                  ProjectLoginRequiredMixin)
-from task_manager.users.forms import UserForm
+from task_manager.users.forms import UserForm, UserUpdateForm
 from task_manager.users.models import User
 
 
@@ -46,7 +46,7 @@ class UserUpdateView(ProjectLoginRequiredMixin,
     Only user can edit himself.
     """
     model = User
-    form_class = UserForm
+    form_class = UserUpdateForm
     template_name = 'form.html'
     extra_context = {
         'title': _('Update user'),
