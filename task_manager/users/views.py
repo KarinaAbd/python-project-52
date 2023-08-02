@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.mixins import (HandleUserPassesTestMixin,
-                                 ProjectDeletionMixin,
+                                 ProtectUsedObjectsDeletionMixin,
                                  ProjectLoginRequiredMixin)
 from task_manager.users.forms import UserForm
 from task_manager.users.models import User
@@ -60,7 +60,7 @@ class UserUpdateView(ProjectLoginRequiredMixin,
 
 class UserDeleteView(ProjectLoginRequiredMixin,
                      HandleUserPassesTestMixin,
-                     ProjectDeletionMixin,
+                     ProtectUsedObjectsDeletionMixin,
                      SuccessMessageMixin,
                      DeleteView):
     """

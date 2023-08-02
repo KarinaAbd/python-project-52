@@ -67,7 +67,7 @@ class DeleteTaskPassesTestMixin(ProjectUserPassesTestMixin):
         return self.get_object().author == self.request.user
 
 
-class ProjectDeletionMixin(DeletionMixin):
+class ProtectUsedObjectsDeletionMixin(DeletionMixin):
     """
     Deny a deletion
     if an object is used by other objects.

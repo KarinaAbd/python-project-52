@@ -3,8 +3,8 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from task_manager.mixins import (ProjectDeletionMixin, ProjectFormMixin,
-                                 ProjectLoginRequiredMixin)
+from task_manager.mixins import (ProjectFormMixin, ProjectLoginRequiredMixin,
+                                 ProtectUsedObjectsDeletionMixin)
 from task_manager.statuses.forms import StatusForm
 from task_manager.statuses.models import Status
 
@@ -57,7 +57,7 @@ class StatusUpdateView(ProjectLoginRequiredMixin,
 
 class StatusDeleteView(ProjectLoginRequiredMixin,
                        ProjectFormMixin,
-                       ProjectDeletionMixin,
+                       ProtectUsedObjectsDeletionMixin,
                        SuccessMessageMixin,
                        DeleteView):
     """
