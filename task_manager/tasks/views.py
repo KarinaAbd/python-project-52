@@ -5,9 +5,8 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 from django_filters.views import FilterView
 
-from task_manager.mixins import (DeleteTaskPassesTestMixin,
-                                 ProjectLoginRequiredMixin,
-                                 ProjectFormMixin)
+from task_manager.mixins import (HasPermissionTaskDeleteMixin,
+                                 ProjectFormMixin, ProjectLoginRequiredMixin)
 from task_manager.tasks.filters import TaskFilter
 from task_manager.tasks.forms import TaskForm
 from task_manager.tasks.models import Task
@@ -70,7 +69,7 @@ class TaskUpdateView(ProjectLoginRequiredMixin,
 
 
 class TaskDeleteView(ProjectLoginRequiredMixin,
-                     DeleteTaskPassesTestMixin,
+                     HasPermissionTaskDeleteMixin,
                      ProjectFormMixin,
                      SuccessMessageMixin,
                      DeleteView):

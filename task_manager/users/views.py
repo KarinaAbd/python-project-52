@@ -6,8 +6,8 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from task_manager.mixins import (HandleUserPassesTestMixin,
-                                 ProtectUsedObjectsDeletionMixin,
+from task_manager.mixins import (EntityProtectedMixin,
+                                 HasPermissionUserChangeMixin,
                                  ProjectLoginRequiredMixin)
 from task_manager.users.forms import UserForm, UserUpdateForm
 from task_manager.users.models import User
@@ -38,7 +38,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 
 
 class UserUpdateView(ProjectLoginRequiredMixin,
-                     HandleUserPassesTestMixin,
+                     HasPermissionUserChangeMixin,
                      SuccessMessageMixin,
                      UpdateView):
     """
@@ -59,8 +59,8 @@ class UserUpdateView(ProjectLoginRequiredMixin,
 
 
 class UserDeleteView(ProjectLoginRequiredMixin,
-                     HandleUserPassesTestMixin,
-                     ProtectUsedObjectsDeletionMixin,
+                     HasPermissionUserChangeMixin,
+                     EntityProtectedMixin,
                      SuccessMessageMixin,
                      DeleteView):
     """

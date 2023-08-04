@@ -5,8 +5,8 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
-from task_manager.mixins import (ProjectFormMixin, ProjectLoginRequiredMixin,
-                                 ProtectUsedObjectsDeletionMixin)
+from task_manager.mixins import (EntityProtectedMixin, ProjectFormMixin,
+                                 ProjectLoginRequiredMixin)
 
 
 class LabelListView(ProjectLoginRequiredMixin, ListView):
@@ -57,7 +57,7 @@ class LabelUpdateView(ProjectLoginRequiredMixin,
 
 class LabelDeleteView(ProjectLoginRequiredMixin,
                       ProjectFormMixin,
-                      ProtectUsedObjectsDeletionMixin,
+                      EntityProtectedMixin,
                       SuccessMessageMixin,
                       DeleteView):
     """

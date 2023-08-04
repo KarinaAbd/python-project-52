@@ -21,6 +21,7 @@ class ProjectRedirectURLMixin(RedirectURLMixin):
             elif self.info_message:
                 messages.info(self.request, self.info_message)
             return resolve_url(self.next_page)
+        return super().get_default_redirect_url()
 
 
 class ProjectLoginRequiredMixin(LoginRequiredMixin):
@@ -32,11 +33,9 @@ class ProjectLoginRequiredMixin(LoginRequiredMixin):
     login_url = reverse_lazy('login')
     denied_message = _('You are not logged in! Please log in.')
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(self.request, self.denied_message)
-            return redirect(self.login_url)
-        return super().dispatch(request, *args, **kwargs)
+    def handle_no_permission(self):
+        messages.error(self.request, self.denied_message)
+        return redirect(self.login_url)
 
 
 class ProjectUserPassesTestMixin(UserPassesTestMixin):
@@ -55,19 +54,19 @@ class ProjectUserPassesTestMixin(UserPassesTestMixin):
         return super().dispatch(request, *args, **kwargs)
 
 
-class HandleUserPassesTestMixin(ProjectUserPassesTestMixin):
+class HasPermissionUserChangeMixin(ProjectUserPassesTestMixin):
     """Only user can change information about him or delete his profile."""
     def test_func(self):
         return self.get_object() == self.request.user
 
 
-class DeleteTaskPassesTestMixin(ProjectUserPassesTestMixin):
+class HasPermissionTaskDeleteMixin(ProjectUserPassesTestMixin):
     """Only author can delete his task."""
     def test_func(self):
         return self.get_object().author == self.request.user
 
 
-class ProtectUsedObjectsDeletionMixin(DeletionMixin):
+class EntityProtectedMixin(DeletionMixin):
     """
     Deny a deletion
     if an object is used by other objects.
