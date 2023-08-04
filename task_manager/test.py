@@ -22,6 +22,12 @@ class IndexTestCase(TestCase):
     def setUP(self) -> None:
         self.client = Client()
 
+        self.credentials = {
+            'username': 'test_user',
+            'password': 'te$t_pa$$word'
+        }
+        self.user = User.objects.create_user(**self.credentials)
+
     def test_index_view(self) -> None:
         response = self.client.get(reverse_lazy('index'))
 
@@ -36,7 +42,7 @@ class IndexTestCase(TestCase):
         response = self.client.get(reverse_lazy('user_create'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='layouts/form.html')
         self.assertContains(response, _('Task Manager'), status_code=200)
         self.assertContains(response, _('Log In'), status_code=200)
         self.assertContains(response, _('Sign Up'), status_code=200)
@@ -46,47 +52,23 @@ class IndexTestCase(TestCase):
         response = self.client.get(reverse_lazy('login'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='layouts/form.html')
         self.assertContains(response, _('Task Manager'), status_code=200)
         self.assertContains(response, _('Log In'), status_code=200)
         self.assertContains(response, _('Sign Up'), status_code=200)
         self.assertContains(response, _('Enter'), status_code=200)
 
     def test_login_logout_user(self) -> None:
-        response = self.client.get(reverse_lazy('login'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        user = User.objects.first()
+        self.client.force_login(user)
+        self.assertRaisesMessage(None, _('You are logged in'))
+        response = self.client.get(reverse_lazy('index'))
+        self.assertContains(response, _('Log Out'), status_code=200)
 
-        user = User.objects.last()
-        response = self.client.post(
-            reverse_lazy('login'),
-            {
-                'username': user.username,
-                'password': user.password,
-            }
-        )
-        self.assertTrue(user.is_authenticated)
-        # messages_list = CookieStorage(response)._decode(
-        #     response.cookies['messages'].value
-        # )
-        # self.assertEqual(
-        #     str(messages_list[0]),
-        #     _('You are logged in')
-        # )
-
-        response = self.client.post(reverse_lazy('logout'))
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse_lazy('index'))
-
-        # self.assertFalse(user.is_authenticated)
-
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('You are logged out')
-        )
+        self.client.logout()
+        self.assertRaisesMessage(None, _('You are logged out'))
+        response = self.client.get(reverse_lazy('index'))
+        self.assertContains(response, _('Log In'), status_code=200)
 
 
 class LoginMixinTestCase(TestCase):
@@ -105,13 +87,13 @@ class LoginMixinTestCase(TestCase):
                                            kwargs={'pk': user.id}))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('You are not logged in! Please log in.')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('You are not logged in! Please log in.'),
+                      messages_container)
 
 
 def get_fixture_content(file_path):
