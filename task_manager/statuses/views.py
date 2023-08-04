@@ -15,7 +15,7 @@ class StatusListView(ProjectLoginRequiredMixin, ListView):
     Authorization required.
     """
     model = Status
-    template_name = 'statuses.html'
+    template_name = 'statuses/statuses.html'
     context_object_name = 'statuses'
 
 
@@ -28,7 +28,7 @@ class StatusCreateView(ProjectLoginRequiredMixin,
     """
     model = Status
     form_class = StatusForm
-    template_name = 'form.html'
+    template_name = 'layouts/form.html'
     success_url = reverse_lazy('status_list')
     success_message = _('Status is successfully created')
     extra_context = {
@@ -46,7 +46,7 @@ class StatusUpdateView(ProjectLoginRequiredMixin,
     """
     model = Status
     form_class = StatusForm
-    template_name = 'form.html'
+    template_name = 'layouts/form.html'
     success_url = reverse_lazy('status_list')
     success_message = _('Status is successfully updated')
     extra_context = {
@@ -66,7 +66,7 @@ class StatusDeleteView(ProjectLoginRequiredMixin,
     The status can be deleted only if it isn't being used.
     """
     model = Status
-    template_name = 'delete.html'
+    template_name = 'layouts/delete.html'
     extra_context = {
         'title': _('Delete status'),
         'button_text': _('Yes, delete'),

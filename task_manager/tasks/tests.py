@@ -30,7 +30,7 @@ class TaskTestCase(TestCase):
     def test_create_task(self) -> None:
         response = self.client.get(reverse('task_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='layouts/form.html')
 
         response = self.client.post(reverse('task_create'),
                                     data=self.task_data)
@@ -57,7 +57,7 @@ class TaskTestCase(TestCase):
                          data=self.task_data)
         response = self.client.get(reverse('task_list'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='tasks.html')
+        self.assertTemplateUsed(response, template_name='tasks/tasks.html')
         self.assertContains(response, _('Name'), status_code=200)
         self.assertContains(response, _('Status'), status_code=200)
         self.assertContains(response, _('Author'), status_code=200)
@@ -77,7 +77,7 @@ class TaskTestCase(TestCase):
         response = self.client.get(reverse('task_page',
                                            kwargs={'pk': task.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='task_page.html')
+        self.assertTemplateUsed(response, template_name='tasks/task_page.html')
         self.assertContains(response, _('Status'), status_code=200)
         self.assertContains(response, _('Author'), status_code=200)
         self.assertContains(response, _('Executor'), status_code=200)
@@ -102,7 +102,7 @@ class TaskTestCase(TestCase):
         response = self.client.get(reverse('task_update',
                                            kwargs={'pk': task.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='layouts/form.html')
 
         response = self.client.post(
             reverse('task_update', kwargs={'pk': task.id}),
@@ -132,7 +132,7 @@ class TaskTestCase(TestCase):
         response = self.client.get(reverse('task_delete',
                                            kwargs={'pk': task.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='delete.html')
+        self.assertTemplateUsed(response, template_name='layouts/delete.html')
 
         response = self.client.post(
             reverse('task_delete', kwargs={'pk': task.id})

@@ -29,7 +29,7 @@ class LabelTestCase(TestCase):
     def test_create_label(self) -> None:
         response = self.client.get(reverse('label_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='layouts/form.html')
 
         response = self.client.post(reverse('label_create'),
                                     data=self.label_data)
@@ -50,7 +50,7 @@ class LabelTestCase(TestCase):
                          data=self.label_data)
         response = self.client.get(reverse('label_list'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='labels.html')
+        self.assertTemplateUsed(response, template_name='labels/labels.html')
         self.assertContains(response, _('Name'), status_code=200)
         self.assertContains(response, _('Creation date'), status_code=200)
         self.assertContains(response, self.label_data['name'], status_code=200)
@@ -64,7 +64,7 @@ class LabelTestCase(TestCase):
         response = self.client.get(reverse('label_update',
                                            kwargs={'pk': label.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='layouts/form.html')
 
         response = self.client.post(
             reverse('label_update', kwargs={'pk': label.id}),
@@ -89,7 +89,7 @@ class LabelTestCase(TestCase):
         response = self.client.get(reverse('label_delete',
                                            kwargs={'pk': label.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='delete.html')
+        self.assertTemplateUsed(response, template_name='layouts/delete.html')
 
         response = self.client.post(
             reverse('label_delete', kwargs={'pk': label.id})

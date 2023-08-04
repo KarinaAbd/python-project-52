@@ -29,7 +29,7 @@ class StatusTestCase(TestCase):
     def test_create_status(self) -> None:
         response = self.client.get(reverse('status_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='layouts/form.html')
 
         response = self.client.post(reverse('status_create'),
                                     data=self.status_data)
@@ -50,7 +50,8 @@ class StatusTestCase(TestCase):
                          data=self.status_data)
         response = self.client.get(reverse('status_list'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='statuses.html')
+        self.assertTemplateUsed(response,
+                                template_name='statuses/statuses.html')
         self.assertContains(response, _('Name'), status_code=200)
         self.assertContains(response, _('Creation date'), status_code=200)
         self.assertContains(response, self.status_data['name'],
@@ -65,7 +66,7 @@ class StatusTestCase(TestCase):
         response = self.client.get(reverse('status_update',
                                            kwargs={'pk': status.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='layouts/form.html')
 
         response = self.client.post(
             reverse('status_update', kwargs={'pk': status.id}),
@@ -90,7 +91,7 @@ class StatusTestCase(TestCase):
         response = self.client.get(reverse('status_delete',
                                            kwargs={'pk': status.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='delete.html')
+        self.assertTemplateUsed(response, template_name='layouts/delete.html')
 
         response = self.client.post(
             reverse('status_delete', kwargs={'pk': status.id})

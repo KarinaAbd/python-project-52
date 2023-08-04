@@ -16,7 +16,7 @@ from task_manager.users.models import User
 class UserListView(ListView):
     """List of all users."""
     model = User
-    template_name = 'users.html'
+    template_name = 'users/users.html'
     context_object_name = 'users'
 
     def get_queryset(self) -> QuerySet[Any]:
@@ -28,7 +28,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     """Create new user."""
     model = User
     form_class = UserForm
-    template_name = 'form.html'
+    template_name = 'layouts/form.html'
     success_url = reverse_lazy('login')
     success_message = _('User is successfully registered')
     extra_context = {
@@ -47,7 +47,7 @@ class UserUpdateView(ProjectLoginRequiredMixin,
     """
     model = User
     form_class = UserUpdateForm
-    template_name = 'form.html'
+    template_name = 'layouts/form.html'
     extra_context = {
         'title': _('Update user'),
         'button_text': _('Update'),
@@ -68,7 +68,7 @@ class UserDeleteView(ProjectLoginRequiredMixin,
     The user can be deleted only if he isn't being used.
     """
     model = User
-    template_name = 'delete.html'
+    template_name = 'layouts/delete.html'
     extra_context = {
         'title': _('Delete user'),
         'button_text': _('Yes, delete'),

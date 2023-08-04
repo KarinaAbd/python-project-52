@@ -25,7 +25,7 @@ class UserTestCase(TestCase):
     def test_create_user(self) -> None:
         response = self.client.get(reverse('user_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='layouts/form.html')
 
         response = self.client.post(reverse('user_create'),
                                     data=self.user_data)
@@ -48,7 +48,7 @@ class UserTestCase(TestCase):
                          data=self.user_data)
         response = self.client.get(reverse('user_list'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='users.html')
+        self.assertTemplateUsed(response, template_name='users/users.html')
         self.assertContains(response, _('Full name'), status_code=200)
         self.assertContains(response, _('Creation date'), status_code=200)
         self.assertContains(
@@ -70,7 +70,7 @@ class UserTestCase(TestCase):
         response = self.client.get(reverse('user_update',
                                            kwargs={'pk': user.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='layouts/form.html')
 
         response = self.client.post(
             reverse('user_update', kwargs={'pk': user.id}),
@@ -106,7 +106,7 @@ class UserTestCase(TestCase):
         response = self.client.get(reverse('user_delete',
                                            kwargs={'pk': user.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='delete.html')
+        self.assertTemplateUsed(response, template_name='layouts/delete.html')
 
         response = self.client.post(reverse('user_delete',
                                             kwargs={'pk': user.id}))

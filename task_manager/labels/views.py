@@ -15,7 +15,7 @@ class LabelListView(ProjectLoginRequiredMixin, ListView):
     Authorization required.
     """
     model = Label
-    template_name = 'labels.html'
+    template_name = 'labels/labels.html'
     context_object_name = 'labels'
 
 
@@ -28,7 +28,7 @@ class LabelCreateView(ProjectLoginRequiredMixin,
     """
     model = Label
     form_class = LabelForm
-    template_name = 'form.html'
+    template_name = 'layouts/form.html'
     success_url = reverse_lazy('label_list')
     success_message = _('Label is successfully created')
     extra_context = {
@@ -46,7 +46,7 @@ class LabelUpdateView(ProjectLoginRequiredMixin,
     """
     model = Label
     form_class = LabelForm
-    template_name = 'form.html'
+    template_name = 'layouts/form.html'
     success_url = reverse_lazy('label_list')
     success_message = _('Label is successfully updated')
     extra_context = {
@@ -66,7 +66,7 @@ class LabelDeleteView(ProjectLoginRequiredMixin,
     The label can be deleted only if it isn't being used.
     """
     model = Label
-    template_name = 'delete.html'
+    template_name = 'layouts/delete.html'
     extra_context = {
         'title': _('Delete label'),
         'button_text': _('Yes, delete'),

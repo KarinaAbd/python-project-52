@@ -19,7 +19,7 @@ class TaskListView(ProjectLoginRequiredMixin,
     """List of all tasks."""
     model = Task
     filterset_class = TaskFilter
-    template_name = 'tasks.html'
+    template_name = 'tasks/tasks.html'
     context_object_name = 'tasks'
     extra_context = {
         'button_text': _('Show'),
@@ -35,7 +35,7 @@ class TaskCreateView(ProjectLoginRequiredMixin,
     """
     model = Task
     form_class = TaskForm
-    template_name = 'form.html'
+    template_name = 'layouts/form.html'
     extra_context = {
         'title': _('Create task'),
         'button_text': _('Create'),
@@ -59,7 +59,7 @@ class TaskUpdateView(ProjectLoginRequiredMixin,
     """
     model = Task
     form_class = TaskForm
-    template_name = 'form.html'
+    template_name = 'layouts/form.html'
     extra_context = {
         'title': _('Update task'),
         'button_text': _('Update'),
@@ -79,7 +79,7 @@ class TaskDeleteView(ProjectLoginRequiredMixin,
     Task can be deleted only by its author.
     """
     model = Task
-    template_name = 'delete.html'
+    template_name = 'layouts/delete.html'
     extra_context = {
         'title': _('Delete task'),
         'button_text': _('Yes, delete'),
@@ -94,7 +94,7 @@ class TaskPageView(ProjectLoginRequiredMixin,
                    DetailView):
     """Show details of the task."""
     model = Task
-    template_name = 'task_page.html'
+    template_name = 'tasks/task_page.html'
     context_object_name = 'task'
 
     def get_context_data(self, **kwargs):
