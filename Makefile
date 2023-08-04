@@ -18,9 +18,11 @@ lint:
 check:
 	poetry check
 
-develop: lint check
+test-html-coverage:
 	$(RUN) coverage run --source='.' manage.py test task_manager
 	$(RUN) coverage html
+
+develop: lint check test-html-coverage
 
 test:
 	$(MANAGE) test
@@ -29,10 +31,10 @@ test-coverage:
 	$(RUN) coverage run --source='.' manage.py test task_manager
 	$(RUN) coverage lcov
 
-trans_start:
+build-messages:
 	$(RUN) django-admin makemessages --ignore="static" --ignore=".env"  -l ru
 
-trans_finish:
+compile-messages:
 	$(RUN) django-admin compilemessages
 
 start:
