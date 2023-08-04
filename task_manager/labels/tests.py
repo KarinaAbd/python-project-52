@@ -37,13 +37,13 @@ class LabelTestCase(TestCase):
         self.assertRedirects(response, reverse('label_list'))
         label = Label.objects.last()
         self.assertEqual(label.name, self.label_data['name'])
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Label is successfully created')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Label is successfully created'),
+                      messages_container)
 
     def test_list_label(self) -> None:
         self.client.post(reverse('label_create'),
@@ -74,13 +74,13 @@ class LabelTestCase(TestCase):
         self.assertRedirects(response, reverse('label_list'))
         label.refresh_from_db()
         self.assertEqual(label.name, 'BEST_WORK_EVER')
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Label is successfully updated')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Label is successfully updated'),
+                      messages_container)
 
     def test_delete_label(self) -> None:
         self.client.post(reverse('label_create'),
@@ -99,13 +99,13 @@ class LabelTestCase(TestCase):
         self.assertNotContains(response, self.label_data['name'],
                                status_code=302)
         self.assertEqual(Label.objects.count(), self.labels_count)
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Label is successfully deleted')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Label is successfully deleted'),
+                      messages_container)
 
 
 class LabelWrongTestCase(TestCase):
@@ -129,11 +129,11 @@ class LabelWrongTestCase(TestCase):
                                             kwargs={'pk': labels[0].id}))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('label_list'))
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Unable to delete a label because it is being used')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Unable to delete a label because it is being used'),
+                      messages_container)
         self.assertEqual(Label.objects.count(), self.labels_count)

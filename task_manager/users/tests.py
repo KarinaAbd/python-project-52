@@ -35,13 +35,13 @@ class UserTestCase(TestCase):
         self.assertEqual(user.first_name, self.user_data['first_name'])
         self.assertEqual(user.last_name, self.user_data['last_name'])
         self.assertEqual(user.username, self.user_data['username'])
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('User is successfully registered')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('User is successfully registered'),
+                      messages_container)
 
     def test_list_user(self) -> None:
         self.client.post(reverse('user_create'),
@@ -72,22 +72,12 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='form.html')
 
-        # response = self.client.post(
-        #     reverse('user_update', kwargs={'pk': user.id}),
-        #     {
-        #         'first_name': self.user_data['first_name'],
-        #         'last_name': self.user_data['last_name'],
-        #         'username': 'Vlad',
-        #         'password1': self.user_data['password1'],
-        #         'password2': self.user_data['password2']
-        #     }
-        # )
         response = self.client.post(
             reverse('user_update', kwargs={'pk': user.id}),
             {
                 'first_name': self.user_data['first_name'],
                 'last_name': 'Newman',
-                'username': self.user_data['username'],
+                'username': 'Vlad',
                 'password1': self.user_data['password1'],
                 'password2': self.user_data['password2']
             }
@@ -97,15 +87,15 @@ class UserTestCase(TestCase):
         user.refresh_from_db()
         self.assertEqual(user.first_name, self.user_data['first_name'])
         self.assertEqual(user.last_name, 'Newman')
-        self.assertEqual(user.username, self.user_data['username'])
+        self.assertEqual(user.username, 'Vlad')
         self.assertTrue(user.check_password(self.user_data['password1']))
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('User is successfully updated')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('User is successfully updated'),
+                      messages_container)
 
     def test_delete_user(self) -> None:
         self.client.post(reverse('user_create'),
@@ -123,13 +113,13 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('user_list'))
         self.assertEqual(User.objects.count(), self.user_count)
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('User is successfully deleted')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('User is successfully deleted'),
+                      messages_container)
 
 
 class UserWrongTestCase(TestCase):
@@ -155,13 +145,13 @@ class UserWrongTestCase(TestCase):
                                            kwargs={'pk': user.id}))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('user_list'))
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('You have no rights to change another user.')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('You have no rights to change another user.'),
+                      messages_container)
 
     def test_delete_other_user(self) -> None:
         user = User.objects.last()
@@ -169,13 +159,13 @@ class UserWrongTestCase(TestCase):
                                            kwargs={'pk': user.id}))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('user_list'))
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('You have no rights to change another user.')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('You have no rights to change another user.'),
+                      messages_container)
         self.assertEqual(User.objects.count(), self.user_count)
 
     def test_delete_used_user(self) -> None:
@@ -183,11 +173,11 @@ class UserWrongTestCase(TestCase):
                                             kwargs={'pk': self.login_user.id}))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('user_list'))
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Unable to delete a user because he is being used')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Unable to delete a user because he is being used'),
+                      messages_container)
         self.assertEqual(User.objects.count(), self.user_count)

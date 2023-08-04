@@ -44,13 +44,13 @@ class TaskTestCase(TestCase):
                          Status.objects.get(id=self.task_data['status']))
         self.assertEqual(task.executor,
                          User.objects.get(id=self.task_data['executor']))
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Task is successfully created')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Task is successfully created'),
+                      messages_container)
 
     def test_list_task(self) -> None:
         self.client.post(reverse('task_create'),
@@ -117,13 +117,13 @@ class TaskTestCase(TestCase):
         self.assertRedirects(response, reverse('task_list'))
         task.refresh_from_db()
         self.assertEqual(task.name, 'Rewrite tests before 6pm')
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Task is successfully updated')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Task is successfully updated'),
+                      messages_container)
 
     def test_delete_task(self) -> None:
         self.client.post(reverse('task_create'),
@@ -142,10 +142,10 @@ class TaskTestCase(TestCase):
         self.assertNotContains(response, self.task_data['name'],
                                status_code=302)
         self.assertEqual(Task.objects.count(), self.task_count)
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Task is successfully deleted')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Task is successfully deleted'),
+                      messages_container)

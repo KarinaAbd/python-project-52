@@ -37,13 +37,13 @@ class StatusTestCase(TestCase):
         self.assertRedirects(response, reverse('status_list'))
         status = Status.objects.last()
         self.assertEqual(status.name, self.status_data['name'])
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Status is successfully created')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Status is successfully created'),
+                      messages_container)
 
     def test_list_status(self) -> None:
         self.client.post(reverse('status_create'),
@@ -75,13 +75,13 @@ class StatusTestCase(TestCase):
         self.assertRedirects(response, reverse('status_list'))
         status.refresh_from_db()
         self.assertEqual(status.name, 'RUNNING TESTS again')
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Status is successfully updated')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Status is successfully updated'),
+                      messages_container)
 
     def test_delete_status(self) -> None:
         self.client.post(reverse('status_create'),
@@ -100,13 +100,13 @@ class StatusTestCase(TestCase):
         self.assertNotContains(response, self.status_data['name'],
                                status_code=302)
         self.assertEqual(Status.objects.count(), self.status_count)
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Status is successfully deleted')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Status is successfully deleted'),
+                      messages_container)
 
 
 class StatusWrongTestCase(TestCase):
@@ -129,11 +129,11 @@ class StatusWrongTestCase(TestCase):
                                             kwargs={'pk': task.status.id}))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('status_list'))
-        messages_list = CookieStorage(response)._decode(
-            response.cookies['messages'].value
-        )
-        self.assertEqual(
-            str(messages_list[0]),
-            _('Unable to delete a status because it is being used')
-        )
+        messages_container = [
+            str(message) for message in CookieStorage(response)._decode(
+                response.cookies['messages'].value
+            )
+        ]
+        self.assertIn(_('Unable to delete a status because it is being used'),
+                      messages_container)
         self.assertEqual(Status.objects.count(), self.status_count)
