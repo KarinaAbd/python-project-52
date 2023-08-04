@@ -29,13 +29,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-# ALLOWED_HOSTS = [
-#     'webserver',
-#     '127.0.0.1',
-#     '0.0.0.0',
-#     'https://task-manager-by-karina.onrender.com/'
-# ]
-
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
@@ -113,10 +106,6 @@ DATABASES['default'].update(db_from_env)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.\
-    #         UserAttributeSimilarityValidator',
-    # },
     {
         'NAME':
         'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -187,10 +176,3 @@ ROLLBAR = {
     'environment': 'development' if DEBUG else 'production',
     'root': BASE_DIR,
 }
-
-# SECURE_HSTS_SECONDS = 31536000
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True

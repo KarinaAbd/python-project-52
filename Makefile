@@ -28,7 +28,7 @@ test:
 	$(MANAGE) test
 
 test-coverage:
-	$(RUN) coverage run --source='.' manage.py test task_manager
+	$(RUN) coverage run --source='.' manage.py test --noinput task_manager
 	$(RUN) coverage lcov
 
 build-messages:
