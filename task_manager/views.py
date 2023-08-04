@@ -11,7 +11,7 @@ class IndexView(TemplateView):
 
 
 class UserLogInView(ProjectRedirectURLMixin, LoginView):
-    template_name = 'form.html'
+    template_name = 'layouts/form.html'
     extra_context = {
         'title': _('Log In'),
         'button_text': _('Enter')

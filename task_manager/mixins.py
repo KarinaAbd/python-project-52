@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import RedirectURLMixin
 from django.db.models import ProtectedError
-from django.shortcuts import redirect, resolve_url
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import DeletionMixin, FormMixin
@@ -20,7 +20,6 @@ class ProjectRedirectURLMixin(RedirectURLMixin):
                 messages.success(self.request, self.success_message)
             elif self.info_message:
                 messages.info(self.request, self.info_message)
-            return resolve_url(self.next_page)
         return super().get_default_redirect_url()
 
 
