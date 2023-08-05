@@ -52,12 +52,11 @@ class StatusTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
                                 template_name='statuses/statuses.html')
-        self.assertContains(response, _('Name'), status_code=200)
-        self.assertContains(response, _('Creation date'), status_code=200)
-        self.assertContains(response, self.status_data['name'],
-                            status_code=200)
-        self.assertContains(response, _('Update'), status_code=200)
-        self.assertContains(response, _('Delete'), status_code=200)
+        self.assertContains(response, _('Name'))
+        self.assertContains(response, _('Creation date'))
+        self.assertContains(response, self.status_data['name'])
+        self.assertContains(response, _('Update'))
+        self.assertContains(response, _('Delete'))
 
     def test_update_status(self) -> None:
         self.client.post(reverse('status_create'),

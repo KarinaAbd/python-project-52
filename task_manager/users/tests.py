@@ -49,17 +49,15 @@ class UserTestCase(TestCase):
         response = self.client.get(reverse('user_list'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='users/users.html')
-        self.assertContains(response, _('Full name'), status_code=200)
-        self.assertContains(response, _('Creation date'), status_code=200)
+        self.assertContains(response, _('Full name'))
+        self.assertContains(response, _('Creation date'))
         self.assertContains(
             response,
-            f"{self.user_data['first_name']} {self.user_data['last_name']}",
-            status_code=200
+            f"{self.user_data['first_name']} {self.user_data['last_name']}"
         )
-        self.assertContains(response, self.user_data['username'],
-                            status_code=200)
-        self.assertContains(response, _('Update'), status_code=200)
-        self.assertContains(response, _('Delete'), status_code=200)
+        self.assertContains(response, self.user_data['username'])
+        self.assertContains(response, _('Update'))
+        self.assertContains(response, _('Delete'))
 
     def test_update_user(self) -> None:
         self.client.post(reverse('user_create'),

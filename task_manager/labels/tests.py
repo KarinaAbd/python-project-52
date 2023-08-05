@@ -51,11 +51,11 @@ class LabelTestCase(TestCase):
         response = self.client.get(reverse('label_list'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='labels/labels.html')
-        self.assertContains(response, _('Name'), status_code=200)
-        self.assertContains(response, _('Creation date'), status_code=200)
-        self.assertContains(response, self.label_data['name'], status_code=200)
-        self.assertContains(response, _('Update'), status_code=200)
-        self.assertContains(response, _('Delete'), status_code=200)
+        self.assertContains(response, _('Name'))
+        self.assertContains(response, _('Creation date'))
+        self.assertContains(response, self.label_data['name'])
+        self.assertContains(response, _('Update'))
+        self.assertContains(response, _('Delete'))
 
     def test_update_label(self) -> None:
         self.client.post(reverse('label_create'),

@@ -22,53 +22,47 @@ class IndexTestCase(TestCase):
     def setUP(self) -> None:
         self.client = Client()
 
-        self.credentials = {
-            'username': 'test_user',
-            'password': 'te$t_pa$$word'
-        }
-        self.user = User.objects.create_user(**self.credentials)
-
     def test_index_view(self) -> None:
         response = self.client.get(reverse_lazy('index'))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='index.html')
-        self.assertContains(response, _('Task Manager'), status_code=200)
-        self.assertContains(response, _('Log In'), status_code=200)
-        self.assertContains(response, _('Sign Up'), status_code=200)
-        self.assertContains(response, _('Get started'), status_code=200)
+        self.assertContains(response, _('Task Manager'))
+        self.assertContains(response, _('Log In'))
+        self.assertContains(response, _('Sign Up'))
+        self.assertContains(response, _('Get started'))
 
     def test_signup_view(self):
         response = self.client.get(reverse_lazy('user_create'))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='layouts/form.html')
-        self.assertContains(response, _('Task Manager'), status_code=200)
-        self.assertContains(response, _('Log In'), status_code=200)
-        self.assertContains(response, _('Sign Up'), status_code=200)
-        self.assertContains(response, _('Register'), status_code=200)
+        self.assertContains(response, _('Task Manager'))
+        self.assertContains(response, _('Log In'))
+        self.assertContains(response, _('Sign Up'))
+        self.assertContains(response, _('Register'))
 
     def test_login_view(self):
         response = self.client.get(reverse_lazy('login'))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='layouts/form.html')
-        self.assertContains(response, _('Task Manager'), status_code=200)
-        self.assertContains(response, _('Log In'), status_code=200)
-        self.assertContains(response, _('Sign Up'), status_code=200)
-        self.assertContains(response, _('Enter'), status_code=200)
+        self.assertContains(response, _('Task Manager'))
+        self.assertContains(response, _('Log In'))
+        self.assertContains(response, _('Sign Up'))
+        self.assertContains(response, _('Enter'))
 
     def test_login_logout_user(self) -> None:
         user = User.objects.first()
         self.client.force_login(user)
         self.assertRaisesMessage(None, _('You are logged in'))
         response = self.client.get(reverse_lazy('index'))
-        self.assertContains(response, _('Log Out'), status_code=200)
+        self.assertContains(response, _('Log Out'))
 
         self.client.logout()
         self.assertRaisesMessage(None, _('You are logged out'))
         response = self.client.get(reverse_lazy('index'))
-        self.assertContains(response, _('Log In'), status_code=200)
+        self.assertContains(response, _('Log In'))
 
 
 class LoginMixinTestCase(TestCase):
