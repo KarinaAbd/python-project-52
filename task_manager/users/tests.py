@@ -75,7 +75,7 @@ class UserTestCase(TestCase):
             {
                 'first_name': self.user_data['first_name'],
                 'last_name': 'Newman',
-                'username': 'Vlad',
+                'username': self.user_data['username'],
                 'password1': self.user_data['password1'],
                 'password2': self.user_data['password2']
             }
@@ -85,7 +85,7 @@ class UserTestCase(TestCase):
         user.refresh_from_db()
         self.assertEqual(user.first_name, self.user_data['first_name'])
         self.assertEqual(user.last_name, 'Newman')
-        self.assertEqual(user.username, 'Vlad')
+        self.assertEqual(user.username, self.user_data['username'])
         self.assertTrue(user.check_password(self.user_data['password1']))
         messages_container = [
             str(message) for message in CookieStorage(response)._decode(

@@ -1,6 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm, BaseUserCreationForm
-from django.forms import CharField
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.forms import CharField, PasswordInput
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import password_validation
 
 from task_manager.users.models import User
 
@@ -21,7 +22,7 @@ class UserForm(UserCreationForm):
         )
 
 
-class UserUpdateForm(BaseUserCreationForm):
+class UserUpdateForm(UserChangeForm):
     """Form to update user."""
     first_name = CharField(max_length=150,
                            required=True,
@@ -29,8 +30,24 @@ class UserUpdateForm(BaseUserCreationForm):
     last_name = CharField(max_length=150,
                           required=True,
                           label=_("Last name"))
+    password = None
+    error_messages = {
+        "password_mismatch": _("The two password fields didn’t match."),
+    }
+    password1 = CharField(
+        label=_("Password"),
+        strip=False,
+        widget=PasswordInput(attrs={"autocomplete": "new-password"}),
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    password2 = CharField(
+        label=_("Password confirmation"),
+        widget=PasswordInput(attrs={"autocomplete": "new-password"}),
+        strip=False,
+        help_text=_("Enter the same password as before, for verification."),
+    )
 
-    class Meta(BaseUserCreationForm.Meta):
+    class Meta(UserChangeForm.Meta):
         model = User
         fields = (
             'first_name', 'last_name', 'username', 'password1', 'password2'
