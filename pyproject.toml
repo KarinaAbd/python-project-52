@@ -5,6 +5,15 @@ description = "Study project No. 4 'Task manager'"
 authors = ["KarinA <abdullaeva.karina.r@gmail.com>"]
 readme = "README.md"
 repository = "https://github.com/KarinaAbd/python-project-52"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Web Environment",
+    "Framework :: Django :: 4.2",
+    "Natural Language :: English",
+    "Natural Language :: Russian",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application"
+]
 packages = [{include = "task_manager"}]
 
 [tool.poetry.dependencies]
