@@ -9,8 +9,7 @@ from task_manager.users.models import User
 
 class UserTestCase(TestCase):
     """Test case for CRUD of user."""
-    fixtures = ['time.json',
-                'users.json',
+    fixtures = ['users.json',
                 'statuses.json',
                 'labels.json',
                 'tasks.json']
@@ -122,8 +121,7 @@ class UserTestCase(TestCase):
 
 class UserWrongTestCase(TestCase):
     """Test case for CRUD of user with wrong conditions."""
-    fixtures = ['time.json',
-                'users.json',
+    fixtures = ['users.json',
                 'statuses.json',
                 'labels.json',
                 'tasks.json']

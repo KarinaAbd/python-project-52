@@ -13,8 +13,7 @@ class IndexTestCase(TestCase):
     Test case for homepage, log in and sign up pages,
     UserLogInView and UserLogOutView.
     """
-    fixtures = ['time.json',
-                'users.json',
+    fixtures = ['users.json',
                 'statuses.json',
                 'labels.json',
                 'tasks.json']
@@ -66,8 +65,7 @@ class IndexTestCase(TestCase):
 
 
 class LoginMixinTestCase(TestCase):
-    fixtures = ['time.json',
-                'users.json',
+    fixtures = ['users.json',
                 'statuses.json',
                 'labels.json',
                 'tasks.json']

@@ -7,8 +7,7 @@
             "last_name": "Waititi",
             "username": "Viago",
             "password": "123qwe!@#",
-            "created_at": "2023-01-19T16:20:45.789Z",
-            "updated_at": "2023-01-22T16:20:45.789Z"
+            "created_at": "2023-01-19T16:20:45.789Z"
         }
     },
     {
@@ -19,8 +18,7 @@
             "last_name": "Kwill",
             "username": "StarLord",
             "password": "qwerty789",
-            "created_at": "2023-01-20T16:20:45.789Z",
-            "updated_at": "2023-01-21T16:20:45.789Z"
+            "created_at": "2023-01-20T16:20:45.789Z"
         }
     }
 ]

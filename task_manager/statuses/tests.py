@@ -11,8 +11,7 @@ from task_manager.users.models import User
 
 class StatusTestCase(TestCase):
     """Test case for CRUD of status."""
-    fixtures = ['time.json',
-                'users.json',
+    fixtures = ['users.json',
                 'statuses.json',
                 'labels.json',
                 'tasks.json']
@@ -111,8 +110,7 @@ class StatusTestCase(TestCase):
 
 class StatusWrongTestCase(TestCase):
     """Test case for CRUD of status with wrong conditions."""
-    fixtures = ['time.json',
-                'users.json',
+    fixtures = ['users.json',
                 'statuses.json',
                 'labels.json',
                 'tasks.json']
