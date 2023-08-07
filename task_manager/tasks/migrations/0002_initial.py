@@ -20,21 +20,38 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='task',
             name='author',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='author', to=settings.AUTH_USER_MODEL, verbose_name='Author'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name='author',
+                to=settings.AUTH_USER_MODEL,
+                verbose_name='Author'
+            ),
         ),
         migrations.AddField(
             model_name='task',
             name='executor',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='executor', to=settings.AUTH_USER_MODEL, verbose_name='Executor'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name='executor',
+                to=settings.AUTH_USER_MODEL,
+                verbose_name='Executor'
+            ),
         ),
         migrations.AddField(
             model_name='task',
             name='labels',
-            field=models.ManyToManyField(blank=True, related_name='labels', through='tasks.TaskLabelRelationships', to='labels.label', verbose_name='Labels'),
+            field=models.ManyToManyField(
+                blank=True, related_name='labels',
+                through='tasks.TaskLabelRelationships',
+                to='labels.label', verbose_name='Labels'
+            ),
         ),
         migrations.AddField(
             model_name='task',
             name='status',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='statuses.status', verbose_name='Status'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                to='statuses.status', verbose_name='Status'
+            ),
         ),
     ]
